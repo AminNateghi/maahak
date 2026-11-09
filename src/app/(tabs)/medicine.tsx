@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { router } from "expo-router";
-import { useState } from "react";
+import { router, useNavigation } from "expo-router";
+import { ArrowRightIcon } from "lucide-react-native";
+import { useLayoutEffect, useState } from "react";
 import { Alert, View } from "react-native";
 import {
   deleteAllHealthData,
@@ -23,18 +24,35 @@ import {
   Colors,
   DateField,
   Field,
+  Page,
   Styles,
   Text,
   Toast,
 } from "@/ui";
+import { IconButton } from "@/ui/icon-button";
 
 const intervals = ["4", "6", "8", "12", "24"] as const;
 
-export function Medicine() {
+export default function Medicine() {
+  const navigation = useNavigation();
   const [medication, setMedication] = useState("");
   const [interval, setInterval] = useState<string>("8");
   const [firstDate, setFirstDate] = useState(toIsoDate());
   const [firstTime, setFirstTime] = useState("09:00");
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: fa.medicine.title,
+      headerTitleAlign: "center",
+      tabBarStyle: {
+        display: "none",
+      },
+      headerLeft: () => (
+        <IconButton icon={ArrowRightIcon} onPress={() => router.back()} />
+      ),
+      headerRight: () => null,
+    });
+  }, [navigation]);
 
   const { data: reminders = [], isLoading: remindersLoading } = useQuery({
     queryKey: ["medication-reminders"],
@@ -43,9 +61,9 @@ export function Medicine() {
   const addMutation = useMutation({
     mutationFn: async () => {
       const name = medication.trim();
-      if (!name) throw new Error(fa.profile.reminderNameRequired);
+      if (!name) throw new Error(fa.medicine.reminderNameRequired);
       if (!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(firstTime))
-        throw new Error(fa.profile.invalidTime);
+        throw new Error(fa.medicine.invalidTime);
       const intervalHours = Number(interval);
       const firstDoseAt = new Date(
         `${firstDate}T${firstTime}:00`,
@@ -72,7 +90,7 @@ export function Medicine() {
       await queryClient.invalidateQueries({
         queryKey: ["medication-reminders"],
       });
-      Toast({ text: fa.profile.reminderSavedMessage });
+      Toast({ text: fa.medicine.reminderSavedMessage });
     },
   });
   const removeMutation = useMutation({
@@ -86,8 +104,8 @@ export function Medicine() {
 
   const confirmDelete = (reminder: (typeof reminders)[number]) => {
     Alert.alert(
-      fa.profile.deleteReminderTitle,
-      formatMessage(fa.profile.deleteReminderQuestion, {
+      fa.medicine.deleteReminderTitle,
+      formatMessage(fa.medicine.deleteReminderQuestion, {
         name: reminder.medicationName,
       }),
       [
@@ -102,38 +120,36 @@ export function Medicine() {
   };
 
   return (
-    <>
+    <Page>
       <Card>
-        <Text style={Styles.sectionTitle}>{fa.profile.medicationReminder}</Text>
+        <Text style={Styles.sectionTitle}>
+          {fa.medicine.medicationReminder}
+        </Text>
         <Field
-          label={fa.profile.medicationName}
+          label={fa.medicine.medicationName}
           value={medication}
           onChangeText={setMedication}
-          placeholder={fa.profile.medicationPlaceholder}
+          placeholder={fa.medicine.medicationPlaceholder}
         />
         <ChoiceGroup
-          label={fa.profile.repeatEvery}
+          label={fa.medicine.repeatEvery}
           options={intervals}
           value={interval}
           onChange={(value) => setInterval(value as string)}
         />
         <DateField
-          label={fa.profile.firstDoseDate}
+          label={fa.medicine.firstDoseDate}
           value={firstDate}
           onChange={setFirstDate}
         />
         <Field
-          label={fa.profile.firstDoseTime}
+          label={fa.medicine.firstDoseTime}
           value={firstTime}
           onChangeText={setFirstTime}
           placeholder="09:00"
         />
         <Button
-          title={
-            addMutation.isPending
-              ? fa.profile.settingReminder
-              : fa.profile.setReminder
-          }
+          title={addMutation.isPending ? fa.common.saving : fa.common.save}
           onPress={() => addMutation.mutate()}
           disabled={addMutation.isPending || !medication.trim()}
         />
@@ -144,7 +160,7 @@ export function Medicine() {
         ) : null}
       </Card>
       <Card>
-        <Text style={Styles.sectionTitle}>{fa.profile.activeReminders}</Text>
+        <Text style={Styles.sectionTitle}>{fa.medicine.activeReminders}</Text>
         {reminders.length ? (
           reminders.map((reminder) => (
             <View
@@ -165,30 +181,30 @@ export function Medicine() {
                 {reminder.medicationName}
               </Text>
               <Text style={{ color: Colors.muted }}>
-                {formatMessage(fa.profile.everyHours, {
+                {formatMessage(fa.medicine.everyHours, {
                   hours: reminder.intervalHours,
                   date: jalaliDateLabel(new Date(reminder.firstDoseAt)),
                   time: localTimeLabel(new Date(reminder.firstDoseAt)),
                 })}
               </Text>
               <Button
-                title={fa.profile.deleteReminder}
+                title={fa.medicine.deleteReminder}
                 secondary
                 onPress={() => confirmDelete(reminder)}
               />
             </View>
           ))
         ) : (
-          <Text style={Styles.subtitle}>{fa.profile.noReminders}</Text>
+          <Text style={Styles.subtitle}>{fa.medicine.noReminders}</Text>
         )}
         {removeMutation.error ? (
           <Text style={{ color: Colors.danger }}>
-            {formatMessage(fa.profile.deleteReminderFailed, {
+            {formatMessage(fa.medicine.deleteReminderFailed, {
               error: removeMutation.error.message,
             })}
           </Text>
         ) : null}
       </Card>
-    </>
+    </Page>
   );
 }
