@@ -1,6 +1,13 @@
 import { router } from "expo-router";
 import { CarIcon, HistoryIcon, XIcon } from "lucide-react-native";
-import { Modal, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Image,
+  Modal,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import fa from "@/i18n/fa.json";
 import MenuItem from "./menu-item";
 import { Text } from "./text";
@@ -23,9 +30,15 @@ export default function AppDrawer({ visible, onClose }: Props) {
       <View>
         <View style={styles.drawer}>
           <View style={styles.header}>
-            <View>
-              <Text style={styles.appName}>{fa.appName}</Text>
-              <Text style={styles.subtitle}>{fa.description}</Text>
+            <View style={styles.iconRow}>
+              <Image
+                source={require("./../../assets/images/maahak-icon.png")}
+                style={styles.icon}
+              />
+              <View style={{ flexDirection: "column", gap: 0 }}>
+                <Text style={styles.appName}>{fa.appName}</Text>
+                <Text style={styles.subtitle}>{fa.description}</Text>
+              </View>
             </View>
 
             <Pressable
@@ -50,9 +63,29 @@ export default function AppDrawer({ visible, onClose }: Props) {
               onPress={() => router.navigate("/(tabs)/profile")}
             />
             <View style={Styles.separator} />
+
+            <MenuItem
+              title={fa.drawer.about}
+              description={fa.drawer.aboutPrompt}
+              onPress={() => {}}
+            />
+            <MenuItem
+              title={fa.drawer.update}
+              description={fa.drawer.updatePrompt}
+              onPress={() => {}}
+            />
+            <MenuItem
+              title={fa.drawer.changes}
+              description={fa.drawer.changesPrompt}
+              onPress={() => {}}
+            />
           </ScrollView>
 
           <View style={styles.footer}>
+            <Image
+              source={require("./../../assets/images/cat.png")}
+              style={styles.imageCat}
+            />
             <Text style={styles.footerText}>{fa.madeWithLove}</Text>
           </View>
         </View>
@@ -78,14 +111,13 @@ const styles = StyleSheet.create({
     paddingBottom: 22,
   },
   appName: {
-    fontSize: 25,
-    fontWeight: "700",
+    fontSize: 24,
+    fontWeight: "bold",
     color: Colors.ink,
   },
   subtitle: {
     fontSize: 13,
-    color: "#6B7280",
-    marginTop: 4,
+    color: Colors.muted,
   },
   closeButton: {
     padding: 8,
@@ -100,10 +132,19 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     borderTopWidth: 1,
     borderTopColor: Colors.border + 20,
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "center",
+    alignItems: "center",
   },
   footerText: {
     fontSize: 12,
+  },
+  icon: { width: 50, height: 50, borderRadius: 12 },
+  imageCat: { width: 80, height: 63 },
+  iconRow: {
+    flexDirection: "row",
+    gap: 10,
+    alignContent: "center",
+    alignItems: "center",
   },
 });
