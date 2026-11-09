@@ -4,11 +4,8 @@
   "madeWithLove": "ساخته شده با ❤️ برای یارم",
   "digits": "۰۱۲۳۴۵۶۷۸۹",
   "tabs": {
-    "home": "خونه",
-    "calendar": "تقویم",
-    "log": "ثبت روزانه",
-    "trends": "روندها",
-    "profile": "پروفایل"
+    "home": "امروزت",
+    "calendar": "تقویم"
   },
   "drawer": {
     "profile": "پروفایل",
@@ -72,7 +69,7 @@
   "onboarding": {
     "regularity": {
       "regular": "منظم",
-      "irregular": "نامنظم و تحت نظر پزشک",
+      "irregular": "نامنظم",
       "unknown": "نمی‌دونم"
     },
     "premenstrualOptions": [
@@ -312,10 +309,10 @@
     "helloSuffix": " 💖",
     "cycleToday": "امروز روز",
     "recordedPeriod": "قاعدگیه",
-    "predictedPeriod": "شروع احتمالی قاعدگی",
-    "ovulationWindow": "پنجره باروری احتمالی",
-    "pmsDays": "روزهای احتمالی پیش از قاعدگی",
-    "cycleDays": "روزهای چرخه",
+    "predictedPeriod": "شروع قاعدگی",
+    "ovulationWindow": "تخمک‌گذاری",
+    "pmsDays": "پی‌ام‌اسی",
+    "cycleDays": "خبری نیست",
     "nextPeriod": "شروع احتمالی قاعدگی بعدی: {date}",
     "recordCyclePrompt": "برای دیدن برآوردها، تاریخ شروع قاعدگی را ثبت کن.",
     "irregularNotice": "بخاطر نامنظم یا معلوم نبودن چرخه، تاریخ‌ها تقریبی و ممکنه اشتباه باشن.",
@@ -404,7 +401,7 @@
     "initialWeight": "{weight} کیلوگرم",
     "regularity": "منظم بودن چرخه",
     "regular": "منظم",
-    "irregular": "نامنظم و تحت نظر پزشک",
+    "irregular": "نامنظم",
     "unknown": "نمی‌دانم",
     "cycleLength": "طول معمول چرخه",
     "periodDuration": "مدت قاعدگی",

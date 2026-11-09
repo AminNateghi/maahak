@@ -8,6 +8,7 @@ import {
   DropletIcon,
   FlameKindlingIcon,
   type LucideIcon,
+  MenuIcon,
   SquareTextIcon,
 } from "lucide-react-native";
 import { useLayoutEffect, useMemo, useState } from "react";
@@ -25,6 +26,7 @@ import {
   toIsoDate,
 } from "@/lib/dates";
 import { Button, Card, Notice, Page, Text } from "@/ui";
+import { IconButton } from "@/ui/icon-button";
 import { Colors, Styles } from "@/ui/theme";
 
 const weekDays = fa.calendar.weekDays;
@@ -39,9 +41,11 @@ export default function CalendarScreen() {
       title: fa.calendar.title,
       headerTitleAlign: "center",
       headerLeft: () => null,
-      headerRight: () => null,
+      headerRight: () => (
+        <IconButton icon={MenuIcon} onPress={() => router.navigate("/pages")} />
+      ),
     });
-  }, [navigation]);
+  }, [navigation, router]);
 
   const [month, setMonth] = useState(jalaliStartOfMonth());
   const [selected, setSelected] = useState(toIsoDate());
@@ -241,7 +245,7 @@ export default function CalendarScreen() {
             disabled={selected > toIsoDate()}
             onPress={() =>
               router.push({
-                pathname: "/(tabs)/log",
+                pathname: "/pages/log",
                 params: { date: selected },
               })
             }

@@ -80,18 +80,8 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <StatusBar />
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          animation: "fade",
-          headerShadowVisible: false,
-          headerTitleStyle: { fontFamily: "Vazirmatn" },
-          contentStyle: {
-            direction: "rtl",
-          },
-        }}
-      />
+      <StatusBar style="auto" animated />
+      <Stack screenOptions={{ headerShown: false }} />
     </QueryClientProvider>
   );
 }

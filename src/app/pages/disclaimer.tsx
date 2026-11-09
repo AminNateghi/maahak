@@ -15,10 +15,10 @@ export default function Disclaimer() {
       tabBarStyle: {
         display: "none",
       },
-      headerLeft: () => (
+      headerRight: () => (
         <IconButton icon={ArrowRightIcon} onPress={() => router.back()} />
       ),
-      headerRight: () => null,
+      headerLeft: () => <></>,
     });
   }, [navigation]);
 

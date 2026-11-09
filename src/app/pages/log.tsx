@@ -12,7 +12,6 @@ import {
   ChoiceGroup,
   DateField,
   Field,
-  Heading,
   Notice,
   Page,
   Text,
@@ -54,10 +53,10 @@ export default function DailyLogScreen() {
         display: "none",
       },
       headerLeft: () => (
-        <IconButton icon={ArrowRightIcon} onPress={() => router.back()} />
+        <IconButton icon={CheckIcon} onPress={() => saveMutation.mutate()} />
       ),
       headerRight: () => (
-        <IconButton icon={CheckIcon} onPress={() => saveMutation.mutate()} />
+        <IconButton icon={ArrowRightIcon} onPress={() => router.back()} />
       ),
     });
   }, [navigation, saveMutation.mutate]);

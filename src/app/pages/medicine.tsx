@@ -3,12 +3,7 @@ import { router, useNavigation } from "expo-router";
 import { ArrowRightIcon } from "lucide-react-native";
 import { useLayoutEffect, useState } from "react";
 import { Alert, View } from "react-native";
-import {
-  deleteAllHealthData,
-  deleteReminder,
-  listReminders,
-  saveReminder,
-} from "@/db/repository";
+import { deleteReminder, listReminders, saveReminder } from "@/db/repository";
 import fa from "@/i18n/fa.json";
 import { formatMessage } from "@/i18n/format";
 import { jalaliDateLabel, localTimeLabel, toIsoDate } from "@/lib/dates";
@@ -43,18 +38,14 @@ export default function Medicine() {
   useLayoutEffect(() => {
     navigation.setOptions({
       title: fa.medicine.title,
-      headerTitleAlign: "center",
-      tabBarStyle: {
-        display: "none",
-      },
-      headerLeft: () => (
+      headerLeft: () => <></>,
+      headerRight: () => (
         <IconButton icon={ArrowRightIcon} onPress={() => router.back()} />
       ),
-      headerRight: () => null,
     });
   }, [navigation]);
 
-  const { data: reminders = [], isLoading: remindersLoading } = useQuery({
+  const { data: reminders = [] } = useQuery({
     queryKey: ["medication-reminders"],
     queryFn: listReminders,
   });

@@ -7,7 +7,7 @@ const dateFieldSource = readFileSync(
   "utf8",
 );
 const profileSource = readFileSync(
-  new URL("../../app/(tabs)/profile.tsx", import.meta.url),
+  new URL("../../app/profile.tsx", import.meta.url),
   "utf8",
 );
 

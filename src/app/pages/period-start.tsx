@@ -33,10 +33,10 @@ export default function PeriodStartScreen() {
       tabBarStyle: {
         display: "none",
       },
-      headerLeft: () => (
+      headerLeft: () => <></>,
+      headerRight: () => (
         <IconButton icon={ArrowRightIcon} onPress={() => router.back()} />
       ),
-      headerRight: () => null,
     });
   }, [navigation]);
 
