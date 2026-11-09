@@ -1,37 +1,23 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
-import { useState } from "react";
+import { router, useNavigation } from "expo-router";
+import { ArrowRightIcon } from "lucide-react-native";
+import { useLayoutEffect } from "react";
 import { Alert, View } from "react-native";
 import {
   deleteAllHealthData,
-  deleteReminder,
   getProfile,
   listReminders,
-  saveReminder,
 } from "@/db/repository";
 import fa from "@/i18n/fa.json";
 import { formatMessage } from "@/i18n/format";
-import { jalaliDateLabel, localTimeLabel, toIsoDate } from "@/lib/dates";
-import {
-  cancelMedicationNotifications,
-  scheduleMedication,
-} from "@/lib/notifications";
-import {
-  Button,
-  Card,
-  ChoiceGroup,
-  DateField,
-  Field,
-  Heading,
-  Notice,
-  Page,
-  Text,
-  Toast,
-} from "@/ui";
+import { jalaliDateLabel } from "@/lib/dates";
+import { cancelMedicationNotifications } from "@/lib/notifications";
+import { Button, Card, Heading, Notice, Page, Text } from "@/ui";
+import { IconButton } from "@/ui/icon-button";
 import { Colors, Styles } from "@/ui/theme";
 
 export default function ProfileScreen() {
-  const router = useRouter();
+  const navigation = useNavigation();
   const queryClient = useQueryClient();
 
   const { data: reminders = [], isLoading: remindersLoading } = useQuery({
@@ -43,6 +29,20 @@ export default function ProfileScreen() {
     queryKey: ["profile"],
     queryFn: getProfile,
   });
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: fa.profile.title,
+      headerTitleAlign: "center",
+      tabBarStyle: {
+        display: "none",
+      },
+      headerLeft: () => (
+        <IconButton icon={ArrowRightIcon} onPress={() => router.back()} />
+      ),
+      headerRight: () => null,
+    });
+  }, [navigation]);
 
   const deleteAllMutation = useMutation({
     mutationFn: async () => {
@@ -70,7 +70,6 @@ export default function ProfileScreen() {
 
   return (
     <Page>
-      <Heading title={fa.profile.title} subtitle={fa.profile.subtitle} />
       {user ? (
         <Card>
           <Text style={Styles.sectionTitle}>{fa.profile.initialInfo}</Text>
@@ -116,8 +115,6 @@ export default function ProfileScreen() {
         </Card>
       ) : null}
 
-      <Notice>{fa.profile.privacy}</Notice>
-      <Notice tone="warning">{fa.profile.notificationNotice}</Notice>
       <Button
         title={
           deleteAllMutation.isPending
