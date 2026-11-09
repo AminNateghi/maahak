@@ -5,7 +5,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { ActivityIndicator, I18nManager, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { db } from "@/db/client";
 import migrations from "@/db/migrations";
 import fa from "@/i18n/fa.json";
@@ -15,9 +15,6 @@ import { Text, Toast } from "@/ui";
 import { Colors } from "@/ui/theme";
 
 SplashScreen.preventAutoHideAsync();
-
-I18nManager.allowRTL(true);
-if (!I18nManager.isRTL) I18nManager.forceRTL(true);
 
 export default function RootLayout() {
   const migration = useMigrations(db, migrations);
@@ -33,7 +30,9 @@ export default function RootLayout() {
   }, [loaded]);
 
   useEffect(() => {
-    if (!migration.success) return;
+    if (!migration.success) {
+      return;
+    }
     refreshMedicationNotifications().catch((error: unknown) => {
       console.error("Could not refresh medication notifications", error);
       Toast({ text: fa.database.notificationRefreshMessage });
@@ -48,13 +47,18 @@ export default function RootLayout() {
           justifyContent: "center",
           padding: 24,
           backgroundColor: Colors.blush,
+          direction: "ltr",
         }}
       >
-        <Text style={{ color: Colors.danger, lineHeight: 24 }}>
-          {fa.database.migrationFailed.replace(
-            "{error}",
-            migration.error.message,
-          )}
+        <Text
+          style={{ color: Colors.danger, lineHeight: 24, fontWeight: "bold" }}
+        >
+          Error On Migration:
+        </Text>
+        <Text
+          style={{ direction: "ltr", color: Colors.danger, lineHeight: 24 }}
+        >
+          {migration.error.message}
         </Text>
       </View>
     );

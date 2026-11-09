@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
 import { useNavigation, useRouter } from "expo-router";
 import { MenuIcon } from "lucide-react-native";
 import { useLayoutEffect, useMemo, useState } from "react";
 import { View } from "react-native";
-import { getProfile, listDailyLogs, listPeriodStarts } from "@/db/repository";
+import { getProfile, listPeriodStarts } from "@/db/repository";
 import fa from "@/i18n/fa.json";
 import { estimateCycle } from "@/lib/cycle";
 import {
@@ -41,21 +42,22 @@ export default function HomeScreen() {
     queryKey: ["period-starts"],
     queryFn: listPeriodStarts,
   });
-  const { data: logs = [] } = useQuery({
-    queryKey: ["daily-logs"],
-    queryFn: listDailyLogs,
-  });
+
   const today = toIsoDate();
   const estimate = useMemo(() => {
     if (!user || !periodStarts.length) return null;
-    return estimateCycle(periodStarts[0].startDate, today, {
-      averageCycleDays: user.averageCycleDays,
-      periodDurationDays: user.periodDurationDays,
-      regularity:
-        user.regularity === "regular" || user.regularity === "irregular"
-          ? user.regularity
-          : "unknown",
-    });
+    return estimateCycle(
+      dayjs(periodStarts[0].startDate).toISOString(),
+      today,
+      {
+        averageCycleDays: user.averageCycleDays,
+        periodDurationDays: user.periodDurationDays,
+        regularity:
+          user.regularity === "regular" || user.regularity === "irregular"
+            ? user.regularity
+            : "unknown",
+      },
+    );
   }, [periodStarts, today, user]);
 
   if (!user)
@@ -140,29 +142,22 @@ export default function HomeScreen() {
           />
         </View>
 
-        <Section>
-          <Card>
-            <Text style={Styles.subtitle}>{fa.home.startPeriodPrompt}</Text>
-            <Button
-              title={fa.home.startPeriodButton}
-              onPress={() => router.push("/(tabs)/period-start")}
-            />
-          </Card>
-        </Section>
-        {/* <Section>
-        <Card>
-          <Text style={Styles.subtitle}>
-            {logs.some((log) => log.logDate === today)
-              ? fa.home.loggedToday
-              : fa.home.logPrompt}
-          </Text>
-          <Button
-            title={fa.home.logDaily}
-            onPress={() => router.push("/(tabs)/log")}
-          />
-        </Card>
-      </Section> */}
-        <Text>{lateBy}</Text>
+        {estimate
+          ? estimate.cycleDay > 10 && (
+              <Section>
+                <Card>
+                  <Text style={Styles.subtitle}>
+                    {fa.home.startPeriodPrompt}
+                  </Text>
+                  <Button
+                    title={fa.home.startPeriodButton}
+                    onPress={() => router.push("/(tabs)/period-start")}
+                  />
+                </Card>
+              </Section>
+            )
+          : null}
+
         {lateBy > 0 ? (
           <Notice tone="warning">{fa.home.latePregnancyNotice}</Notice>
         ) : (

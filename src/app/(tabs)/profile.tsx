@@ -4,19 +4,14 @@ import { router, useNavigation } from "expo-router";
 import { ArrowRightIcon } from "lucide-react-native";
 import { useLayoutEffect, useState } from "react";
 import { Controller, type SubmitHandler, useForm } from "react-hook-form";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import { z } from "zod";
-import {
-  deleteAllHealthData,
-  getProfile,
-  listReminders,
-  updateProfileDetails,
-} from "@/db/repository";
+import { getProfile, updateProfileDetails } from "@/db/repository";
 import fa from "@/i18n/fa.json";
 import { formatMessage } from "@/i18n/format";
 import { jalaliDateLabel } from "@/lib/dates";
-import { cancelMedicationNotifications } from "@/lib/notifications";
-import { Button, Card, ChoiceGroup, Field, Notice, Page, Text } from "@/ui";
+import { Button, Card, ChoiceGroup, Field, Page, Text } from "@/ui";
+import DeleteAllRecords from "@/ui/delete-all-records";
 import { IconButton } from "@/ui/icon-button";
 import { Colors, Styles } from "@/ui/theme";
 
@@ -82,11 +77,6 @@ export default function ProfileScreen() {
     mode: "onChange",
   });
 
-  const { data: reminders = [], isLoading: remindersLoading } = useQuery({
-    queryKey: ["medication-reminders"],
-    queryFn: listReminders,
-  });
-
   const { data: user } = useQuery({
     queryKey: ["profile"],
     queryFn: getProfile,
@@ -106,19 +96,6 @@ export default function ProfileScreen() {
     });
   }, [navigation]);
 
-  const deleteAllMutation = useMutation({
-    mutationFn: async () => {
-      for (const reminder of reminders) {
-        await cancelMedicationNotifications(reminder.notificationId);
-      }
-      await deleteAllHealthData();
-    },
-    onSuccess: () => {
-      queryClient.clear();
-      router.replace("/onboarding");
-    },
-  });
-
   const editMutation = useMutation({
     mutationFn: (value: EditFormOutput) =>
       updateProfileDetails({
@@ -137,17 +114,6 @@ export default function ProfileScreen() {
       setEditing(false);
     },
   });
-
-  const confirmDeleteAll = () => {
-    Alert.alert(fa.profile.deleteAllTitle, fa.profile.deleteAllQuestion, [
-      { text: fa.common.cancel, style: "cancel" },
-      {
-        text: fa.profile.deleteAllConfirm,
-        style: "destructive",
-        onPress: () => deleteAllMutation.mutate(),
-      },
-    ]);
-  };
 
   const startEditing = () => {
     if (!user) return;
@@ -350,28 +316,7 @@ export default function ProfileScreen() {
         </Card>
       ) : null}
 
-      {!editing && (
-        <Card>
-          <Notice tone="neutral">{fa.profile.deleteAllDescription}</Notice>
-          <Button
-            title={
-              deleteAllMutation.isPending
-                ? fa.profile.deletingAll
-                : fa.profile.deleteAll
-            }
-            secondary
-            onPress={confirmDeleteAll}
-            disabled={deleteAllMutation.isPending || remindersLoading}
-          />
-          {deleteAllMutation.error ? (
-            <Text style={{ color: Colors.danger }}>
-              {formatMessage(fa.profile.deleteAllFailed, {
-                error: deleteAllMutation.error.message,
-              })}
-            </Text>
-          ) : null}
-        </Card>
-      )}
+      {!editing && <DeleteAllRecords />}
     </Page>
   );
 }

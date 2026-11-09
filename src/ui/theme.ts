@@ -88,6 +88,15 @@ export const Styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "700",
   },
+  buttonMonth: {
+    minWidth: 80,
+    borderRadius: 14,
+    backgroundColor: Colors.blush,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
   secondaryButton: {
     backgroundColor: Colors.rose,
   },

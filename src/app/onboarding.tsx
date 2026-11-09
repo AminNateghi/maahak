@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 import { useState } from "react";
 import { Controller, type SubmitHandler, useForm } from "react-hook-form";
 import { View } from "react-native";
@@ -84,7 +84,6 @@ type FormInput = z.input<typeof schema>;
 type FormOutput = z.output<typeof schema>;
 
 export default function OnboardingScreen() {
-  const router = useRouter();
   const queryClient = useQueryClient();
   const [saving, setSaving] = useState(false);
   const {
@@ -132,7 +131,7 @@ export default function OnboardingScreen() {
 
   return (
     <Page>
-      <Heading title={fa.onboarding.welcome} />
+      <Heading title={fa.onboarding.welcome} style={{ marginTop: 20 }} />
       <Notice tone="information">{fa.onboarding.subtitle}</Notice>
       <Notice>{fa.onboarding.privacy}</Notice>
       <Card>

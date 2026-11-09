@@ -18,7 +18,7 @@ export const profile = sqliteTable("profile", {
 
 export const periodStarts = sqliteTable("period_starts", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  startDate: text("start_date").notNull().unique(),
+  startDate: integer("start_date", { mode: "timestamp" }).notNull(),
   createdAt: text("created_at").notNull(),
 });
 

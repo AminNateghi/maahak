@@ -20,7 +20,7 @@
     "changes": "تغییرات اخیر",
     "changesPrompt": "مشاهده آخرین تغییرات برنامه",
     "disclaimer": "رفع مسئولیت",
-    "disclaimerPrompt": "نکته‌های برای استفاده از برنماه"
+    "disclaimerPrompt": "نکته‌های برای استفاده از برنامه"
   },
   "common": {
     "save": "ذخیره",
@@ -61,7 +61,7 @@
     "accessibility": "انتخاب تاریخ"
   },
   "database": {
-    "migrationFailed": "پایگاه داده آماده نشد: {error}",
+    "migrationFailed": "خطا در دیتابیس:",
     "notificationRefreshTitle": "یادآورها به‌روز نشدند",
     "notificationRefreshMessage": "برای تنظیم دوباره نوتیفیکیشن‌های بخش دارو، صفحه پروفایل دوباره باز کن و مجوز نوتیفیکیشن بررسی کن."
   },
@@ -338,6 +338,8 @@
       "پ",
       "ج"
     ],
+    "nextMonth": "ماه بعدی",
+    "previousMonth": "ماه قبلی",
     "title": "تقویم چرخه قاعدگی",
     "periodLegend": "قاعدگی",
     "ovulationLegend": "تخمک‌گذاری",

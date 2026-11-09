@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
 import { useNavigation, useRouter } from "expo-router";
 import {
   ArrowLeftIcon,
@@ -7,7 +8,6 @@ import {
   DropletIcon,
   FlameKindlingIcon,
   type LucideIcon,
-  PlusIcon,
   SquareTextIcon,
 } from "lucide-react-native";
 import { useLayoutEffect, useMemo, useState } from "react";
@@ -25,8 +25,7 @@ import {
   toIsoDate,
 } from "@/lib/dates";
 import { Button, Card, Notice, Page, Text } from "@/ui";
-import { IconButton } from "@/ui/icon-button";
-import { Colors } from "@/ui/theme";
+import { Colors, Styles } from "@/ui/theme";
 
 const weekDays = fa.calendar.weekDays;
 
@@ -60,14 +59,18 @@ export default function CalendarScreen() {
   });
   const estimate =
     user && periodStarts.length
-      ? estimateCycle(periodStarts[0].startDate, toIsoDate(), {
-          averageCycleDays: user.averageCycleDays,
-          periodDurationDays: user.periodDurationDays,
-          regularity:
-            user.regularity === "regular" || user.regularity === "irregular"
-              ? user.regularity
-              : "unknown",
-        })
+      ? estimateCycle(
+          dayjs(periodStarts[0].startDate).toISOString(),
+          toIsoDate(),
+          {
+            averageCycleDays: user.averageCycleDays,
+            periodDurationDays: user.periodDurationDays,
+            regularity:
+              user.regularity === "regular" || user.regularity === "irregular"
+                ? user.regularity
+                : "unknown",
+          },
+        )
       : null;
   const monthDates = useMemo(() => jalaliMonthGridDates(month), [month]);
   const selectedLog = logs.find((log) => log.logDate === selected);
@@ -84,14 +87,22 @@ export default function CalendarScreen() {
             justifyContent: "space-between",
           }}
         >
-          <Pressable onPress={() => setMonth(addJalaliMonthsStart(month, -1))}>
+          <Pressable
+            onPress={() => setMonth(addJalaliMonthsStart(month, -1))}
+            style={Styles.buttonMonth}
+          >
             <ArrowRightIcon />
+            <Text style={Styles.label}>{fa.calendar.previousMonth}</Text>
           </Pressable>
           <Text style={{ color: Colors.ink, fontWeight: "700", fontSize: 17 }}>
             {jalaliMonthLabel(new Date(`${month}T12:00:00`))}
           </Text>
-          <Pressable onPress={() => setMonth(addJalaliMonthsStart(month, 1))}>
+          <Pressable
+            onPress={() => setMonth(addJalaliMonthsStart(month, 1))}
+            style={Styles.buttonMonth}
+          >
             <ArrowLeftIcon />
+            <Text style={Styles.label}>{fa.calendar.nextMonth}</Text>
           </Pressable>
         </View>
         <View style={{ flexDirection: "row" }}>

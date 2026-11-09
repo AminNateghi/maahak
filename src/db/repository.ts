@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { desc, eq } from "drizzle-orm";
 import { toIsoDate } from "@/lib/dates";
 import { db } from "./client";
@@ -25,7 +26,10 @@ export async function saveProfile(value: Omit<NewProfile, "id">) {
     }
     await tx
       .insert(periodStarts)
-      .values({ startDate: value.lastPeriodStart, createdAt: value.createdAt })
+      .values({
+        startDate: dayjs(value.lastPeriodStart).toDate(),
+        createdAt: value.createdAt,
+      })
       .onConflictDoNothing();
     await tx
       .insert(weightEntries)
@@ -74,7 +78,10 @@ export async function addPeriodStart(startDate: string) {
   await db.transaction(async (tx) => {
     await tx
       .insert(periodStarts)
-      .values({ startDate, createdAt: new Date().toISOString() })
+      .values({
+        startDate: dayjs(startDate).toDate(),
+        createdAt: new Date().toISOString(),
+      })
       .onConflictDoNothing();
     const [current] = await tx.select().from(profile).limit(1);
     if (current && startDate > current.lastPeriodStart) {

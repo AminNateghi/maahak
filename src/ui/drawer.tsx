@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { CarIcon, HistoryIcon, XIcon } from "lucide-react-native";
+import { XIcon } from "lucide-react-native";
 import {
   Image,
   Modal,
