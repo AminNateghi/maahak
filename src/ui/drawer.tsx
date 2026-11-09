@@ -57,11 +57,21 @@ export default function AppDrawer({ visible, onClose }: Props) {
             showsVerticalScrollIndicator={false}
           >
             <MenuItem
-              //   icon={<CarIcon size={21} color={Theme.primary} />}
               title={fa.drawer.profile}
               description={fa.drawer.profilePrompt}
               onPress={() => router.navigate("/(tabs)/profile")}
             />
+            <MenuItem
+              title={fa.drawer.weight}
+              description={fa.drawer.weightPrompt}
+              onPress={() => router.navigate("/(tabs)/trends")}
+            />
+            <MenuItem
+              title={fa.drawer.medicine}
+              description={fa.drawer.medicinePrompt}
+              onPress={() => router.navigate("/(tabs)/medicine")}
+            />
+
             <View style={Styles.separator} />
 
             <MenuItem

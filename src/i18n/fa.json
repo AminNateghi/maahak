@@ -12,6 +12,10 @@
   },
   "drawer": {
     "profile": "پروفایل",
+    "weight": "تغییرات وزن",
+    "weightPrompt": "مدیریت کم و زیاد شدن وزن",
+    "medicine": "یادآوری داروها",
+    "medicinePrompt": "مدیریت و یادآوری داروها",
     "profilePrompt": "نمایش و ویرایش مشخصاتت",
     "about": "معرفی",
     "aboutPrompt": "توضیحی درمورد برنامه",
