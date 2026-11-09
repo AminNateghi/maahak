@@ -79,6 +79,12 @@ export default function AppDrawer({ visible, onClose }: Props) {
               description={fa.drawer.changesPrompt}
               onPress={() => {}}
             />
+            <View style={Styles.separator} />
+            <MenuItem
+              title={fa.drawer.disclaimer}
+              description={fa.drawer.disclaimerPrompt}
+              onPress={() => router.navigate("/(tabs)/disclaimer")}
+            />
           </ScrollView>
 
           <View style={styles.footer}>

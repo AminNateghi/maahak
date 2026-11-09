@@ -41,6 +41,7 @@ export function ChoiceGroup<T extends string>({
               }}
               style={{
                 borderRadius: 18,
+                minWidth: 45,
                 paddingHorizontal: 13,
                 paddingVertical: 9,
                 borderWidth: 1,
@@ -48,7 +49,12 @@ export function ChoiceGroup<T extends string>({
                 backgroundColor: active ? Colors.rose : Colors.white,
               }}
             >
-              <Text style={{ color: active ? Colors.primaryDark : Colors.ink }}>
+              <Text
+                style={{
+                  color: active ? Colors.primaryDark : Colors.ink,
+                  textAlign: "center",
+                }}
+              >
                 {getLabel ? getLabel(option) : option}
               </Text>
             </Pressable>

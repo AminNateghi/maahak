@@ -22,6 +22,7 @@ export default function TabLayout() {
       <Tabs.Screen name="trends" />
       <Tabs.Screen name="profile" />
       <Tabs.Screen name="medicine" />
+      <Tabs.Screen name="disclaimer" />
     </Tabs>
   );
 }
