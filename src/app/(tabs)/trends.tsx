@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { router, useNavigation } from "expo-router";
 import { ArrowRightIcon } from "lucide-react-native";
 import { useLayoutEffect, useState } from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import Svg, { Circle, Line, Polyline, Text as SvgText } from "react-native-svg";
 import {
   getProfile,
@@ -17,7 +17,6 @@ import {
   Card,
   DateField,
   Field,
-  Heading,
   Notice,
   Page,
   Text,
@@ -166,7 +165,7 @@ export default function TrendsScreen() {
               }}
             >
               {formatMessage(fa.trends.change, {
-                change: `${change > 0 ? "+" : ""}${change.toFixed(1)}`,
+                change: `${toPersianDigits(change.toFixed(1))}${change > 0 ? "+" : ""}`,
               })}
             </Text>
           </>
