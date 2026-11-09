@@ -162,7 +162,7 @@ export default function HomeScreen() {
           />
         </Card>
       </Section> */}
-
+        <Text>{lateBy}</Text>
         {lateBy > 0 ? (
           <Notice tone="warning">{fa.home.latePregnancyNotice}</Notice>
         ) : (

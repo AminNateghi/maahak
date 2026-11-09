@@ -41,6 +41,27 @@ export async function saveProfile(value: Omit<NewProfile, "id">) {
   });
 }
 
+export async function updateProfileDetails(
+  value: Pick<
+    NewProfile,
+    | "name"
+    | "age"
+    | "heightCm"
+    | "averageCycleDays"
+    | "periodDurationDays"
+    | "regularity"
+  >,
+) {
+  await db.transaction(async (tx) => {
+    const [current] = await tx.select().from(profile).limit(1);
+    if (!current) {
+      throw new Error("Profile not found");
+    }
+
+    await tx.update(profile).set(value).where(eq(profile.id, current.id));
+  });
+}
+
 export async function listPeriodStarts() {
   return db
     .select()
