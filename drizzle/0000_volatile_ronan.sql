@@ -20,11 +20,10 @@ CREATE TABLE `medication_reminders` (
 --> statement-breakpoint
 CREATE TABLE `period_starts` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`start_date` text NOT NULL,
+	`start_date` integer NOT NULL,
 	`created_at` text NOT NULL
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX `period_starts_start_date_unique` ON `period_starts` (`start_date`);--> statement-breakpoint
 CREATE TABLE `profile` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`name` text NOT NULL,
