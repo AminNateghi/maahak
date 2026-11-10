@@ -28,7 +28,7 @@ import { IconButton } from "@/ui/icon-button";
 
 const intervals = ["4", "6", "8", "12", "24"] as const;
 
-export default function Medicine() {
+export default function MedicineScreen() {
   const navigation = useNavigation();
   const [medication, setMedication] = useState("");
   const [interval, setInterval] = useState<string>("8");

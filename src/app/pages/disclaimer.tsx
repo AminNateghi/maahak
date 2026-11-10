@@ -5,7 +5,7 @@ import fa from "@/i18n/fa.json";
 import { Card, Page, Text } from "@/ui";
 import { IconButton } from "@/ui/icon-button";
 
-export default function Disclaimer() {
+export default function DisclaimerScreen() {
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
