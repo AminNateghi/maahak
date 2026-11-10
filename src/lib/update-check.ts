@@ -15,9 +15,7 @@ export async function fetchUpdateAvailability(): Promise<UpdateCheckResult> {
   );
 
   if (!response.ok) {
-    throw new Error(
-      `GitHub release request failed with status ${response.status}`,
-    );
+    console.log(`GitHub release request failed with status ${response.status}`);
   }
 
   const release = await response.json();

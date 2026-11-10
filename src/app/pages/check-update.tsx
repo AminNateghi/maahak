@@ -35,7 +35,7 @@ export default function CheckUpdateScreen() {
     async function check() {
       try {
         const result = await checkNow();
-        if (!result.available) {
+        if (!result?.available) {
           setMessage(fa.checkUpdate.noUpdateAvailable);
           setUpdateAvailable(false);
           return;
