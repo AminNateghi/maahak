@@ -30,6 +30,7 @@ export default function TabLayout() {
       <Tabs.Screen name="trends" />
       <Tabs.Screen name="about" />
       <Tabs.Screen name="check-update" />
+      <Tabs.Screen name="changelog" />
     </Tabs>
   );
 }

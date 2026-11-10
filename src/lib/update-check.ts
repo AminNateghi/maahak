@@ -20,11 +20,11 @@ export async function fetchUpdateAvailability(): Promise<UpdateCheckResult> {
 
   const release = await response.json();
 
-  if (release.draft || release.prerelease) {
+  if (release || release.draft || release.prerelease) {
     return { available: false };
   }
 
-  const latestVersion = release.tag_name.replace(/^v/, "");
+  const latestVersion = release?.tag_name?.replace(/^v/, "");
   const currentVersion = Constants.expoConfig?.version ?? "0.0.0";
   const apk = release.assets.find((asset: { name: string }) =>
     asset.name.toLowerCase().endsWith(".apk"),

@@ -56,7 +56,10 @@ export default function DailyLogScreen() {
         <IconButton icon={CheckIcon} onPress={() => saveMutation.mutate()} />
       ),
       headerRight: () => (
-        <IconButton icon={ArrowRightIcon} onPress={() => router.back()} />
+        <IconButton
+          icon={ArrowRightIcon}
+          onPress={() => router.navigate("/(tabs)/calendar")}
+        />
       ),
     });
   }, [navigation, saveMutation.mutate]);

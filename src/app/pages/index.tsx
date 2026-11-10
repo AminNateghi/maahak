@@ -85,7 +85,7 @@ export default function MenuScreen() {
           <MenuItem
             title={fa.drawer.changes}
             description={fa.drawer.changesPrompt}
-            onPress={() => {}}
+            onPress={() => router.navigate("/pages/changelog")}
           />
           <View style={Styles.separator} />
           <MenuItem
