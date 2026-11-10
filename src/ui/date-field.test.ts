@@ -3,11 +3,11 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 const dateFieldSource = readFileSync(
-  new URL("./components.tsx", import.meta.url),
+  new URL("./date-field.tsx", import.meta.url),
   "utf8",
 );
 const profileSource = readFileSync(
-  new URL("../../app/profile.tsx", import.meta.url),
+  new URL("../app/pages/profile.tsx", import.meta.url),
   "utf8",
 );
 

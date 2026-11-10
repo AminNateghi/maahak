@@ -160,14 +160,14 @@ export function DateField({
             <View style={{ flexDirection: "row", gap: 10 }}>
               <View style={{ flex: 1 }}>
                 <Button
-                  title={fa.dateWheel.cancel}
+                  title={fa.common.cancel}
                   secondary
                   onPress={() => setVisible(false)}
                 />
               </View>
               <View style={{ flex: 1 }}>
                 <Button
-                  title={fa.dateWheel.confirm}
+                  title={fa.common.confirm}
                   disabled={!isoDate || isBeforeMinimum || isAfterMaximum}
                   onPress={() => {
                     if (isoDate && !isBeforeMinimum && !isAfterMaximum) {

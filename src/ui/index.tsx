@@ -9,4 +9,5 @@ export * from "./page";
 export * from "./section";
 export * from "./text";
 export * from "./theme";
+export * from "./time-field";
 export * from "./toast";

@@ -28,10 +28,10 @@
     "saving": "در حال ذخیره...",
     "saved": "ذخیره شد",
     "retry": "ذخیره نشد. دوباره تلاش کن.",
+    "confirm": "انتخاب",
     "cancel": "بستن",
     "delete": "حذف",
     "edit": "ویرایش",
-    "confirm": "باشه",
     "hours": "ساعت",
     "days": "روز",
     "kilograms": "کیلوگرم",
@@ -57,9 +57,13 @@
     "month": "ماه",
     "day": "روز",
     "title": "انتخاب تاریخ",
-    "cancel": "بستن",
-    "confirm": "انتخاب",
     "accessibility": "انتخاب تاریخ"
+  },
+  "timeWheel": {
+    "title": "انتخاب ساعت",
+    "hour": "ساعت",
+    "minute": "دقیقه",
+    "accessibility": "انتخاب ساعت به صورت ۲۴ ساعته"
   },
   "database": {
     "migrationFailed": "خطا در دیتابیس:",

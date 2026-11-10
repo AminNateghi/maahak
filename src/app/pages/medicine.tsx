@@ -22,6 +22,7 @@ import {
   Page,
   Styles,
   Text,
+  TimeField,
   Toast,
 } from "@/ui";
 import { IconButton } from "@/ui/icon-button";
@@ -133,11 +134,10 @@ export default function MedicineScreen() {
           value={firstDate}
           onChange={setFirstDate}
         />
-        <Field
+        <TimeField
           label={fa.medicine.firstDoseTime}
           value={firstTime}
-          onChangeText={setFirstTime}
-          placeholder="09:00"
+          onChange={setFirstTime}
         />
         <Button
           title={addMutation.isPending ? fa.common.saving : fa.common.save}
