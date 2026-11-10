@@ -1,8 +1,7 @@
 import type { ExpoConfig } from "expo/config";
-import fa from "./src/i18n/fa.json";
 
 const config: ExpoConfig = {
-  name: fa.appName,
+  name: "Maahak",
   slug: "maahak",
   scheme: "maahak",
   version: "1.0.0",
@@ -19,10 +18,10 @@ const config: ExpoConfig = {
       "expo-splash-screen",
       {
         backgroundColor: "#FFF6F8",
-        image: "./assets/images/maahak-icon-light.png",
+        image: "./assets/images/maahak-icon-transparency.png",
         dark: {
           backgroundColor: "#352733",
-          image: "./assets/images/maahak-icon-dark.png",
+          image: "./assets/images/maahak-icon-transparency.png",
         },
       },
     ],
