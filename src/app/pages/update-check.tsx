@@ -7,7 +7,7 @@ import fa from "@/i18n/fa.json";
 import { Button, Card, Page, Text } from "@/ui";
 import { IconButton } from "@/ui/icon-button";
 
-export default function CheckUpdateScreen() {
+export default function UpdateCheckScreen() {
   const navigation = useNavigation();
   const { checkNow } = useUpdateCheck();
   const [message, setMessage] = useState<string>("");

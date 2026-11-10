@@ -1,7 +1,7 @@
 import { router, useNavigation } from "expo-router";
 import { ArrowRightIcon } from "lucide-react-native";
 import { useLayoutEffect } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import fa from "@/i18n/fa.json";
 import { Card, Colors, Page, Text } from "@/ui";
 import { IconButton } from "@/ui/icon-button";
@@ -86,11 +86,6 @@ export default function ChangelogScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.blush,
-    direction: "rtl",
-  },
   entry: {
     color: Colors.ink,
     fontSize: 14,

@@ -1,16 +1,9 @@
 import { router, useNavigation } from "expo-router";
 import { XIcon } from "lucide-react-native";
 import { useLayoutEffect } from "react";
-import {
-  Image,
-  Modal,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import fa from "@/i18n/fa.json";
-import { Colors, Page, Styles, Text } from "@/ui";
+import { Colors, Styles, Text } from "@/ui";
 import MenuItem from "@/ui/menu-item";
 
 export default function MenuScreen() {
@@ -76,7 +69,7 @@ export default function MenuScreen() {
         <MenuItem
           title={fa.drawer.update}
           description={fa.drawer.updatePrompt}
-          onPress={() => router.navigate("/pages/check-update")}
+          onPress={() => router.navigate("/pages/update-check")}
         />
         <MenuItem
           title={fa.drawer.changes}
