@@ -6,10 +6,28 @@ import {
   dailyLogs,
   medicationReminders,
   type NewProfile,
+  type NewSettings,
   periodStarts,
   profile,
+  settings,
   weightEntries,
 } from "./schema";
+
+export async function getSettings() {
+  const [row] = await db.select().from(settings).limit(1);
+  return row ?? null;
+}
+
+export async function saveSettings(value: Omit<NewSettings, "id">) {
+  await db.transaction(async (tx) => {
+    const [current] = await tx.select().from(settings).limit(1);
+    if (current) {
+      await tx.update(settings).set(value).where(eq(settings.id, current.id));
+    } else {
+      await tx.insert(settings).values(value);
+    }
+  });
+}
 
 export async function getProfile() {
   const [row] = await db.select().from(profile).limit(1);

@@ -40,6 +40,11 @@ CREATE TABLE `profile` (
 	`created_at` text NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE `settings` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`app_update_check_result` text
+);
+--> statement-breakpoint
 CREATE TABLE `weight_entries` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`entry_date` text NOT NULL,
