@@ -137,6 +137,17 @@ export default function HomeScreen() {
         />
       </View>
 
+      {estimate?.ovulationDates.has(today) && (
+        <Notice tone="information">
+          <Text>{fa.calendar.ovulationDescription}</Text>
+        </Notice>
+      )}
+      {estimate?.pmsDates.has(today) && (
+        <Notice tone="information">
+          <Text>{fa.calendar.pmsDescription}</Text>
+        </Notice>
+      )}
+
       {estimate
         ? estimate.cycleDay > 10 && (
             <Section>

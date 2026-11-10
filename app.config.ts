@@ -4,7 +4,7 @@ const config: ExpoConfig = {
   name: "Maahak",
   slug: "maahak",
   scheme: "maahak",
-  version: "1.0.3",
+  version: "1.0.4",
   orientation: "portrait",
   userInterfaceStyle: "light",
   icon: "./assets/images/maahak-icon.png",
@@ -27,7 +27,7 @@ const config: ExpoConfig = {
     ],
   ],
   android: {
-    versionCode: 103,
+    versionCode: 104,
     package: "xyz.nateghi.maahak",
     allowBackup: false,
     permissions: ["POST_NOTIFICATIONS", "VIBRATE"],
