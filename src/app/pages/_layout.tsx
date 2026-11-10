@@ -28,6 +28,7 @@ export default function TabLayout() {
       <Tabs.Screen name="period-start" />
       <Tabs.Screen name="profile" />
       <Tabs.Screen name="trends" />
+      <Tabs.Screen name="about" />
     </Tabs>
   );
 }
