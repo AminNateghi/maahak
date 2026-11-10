@@ -30,7 +30,7 @@ export default function MenuScreen() {
         <View style={styles.header}>
           <View style={styles.iconRow}>
             <Image
-              source={require("./../../../assets/images/maahak-icon.png")}
+              source={require("./../../../assets/images/maahak-icon-transparency.png")}
               style={styles.icon}
             />
             <View style={{ flexDirection: "column", gap: 0 }}>
