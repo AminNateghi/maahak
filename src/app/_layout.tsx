@@ -6,6 +6,11 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
+import { KeyboardProvider } from "react-native-keyboard-controller";
+import {
+  initialWindowMetrics,
+  SafeAreaProvider,
+} from "react-native-safe-area-context";
 import { UpdateCheckProvider } from "@/context/update-check-context";
 import { db } from "@/db/client";
 import migrations from "@/db/migrations/migrations";
@@ -80,11 +85,18 @@ export default function RootLayout() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <UpdateCheckProvider>
-        <StatusBar style="auto" animated />
-        <Stack screenOptions={{ headerShown: false }} />
-      </UpdateCheckProvider>
-    </QueryClientProvider>
+    <KeyboardProvider>
+      <SafeAreaProvider
+        style={{ flex: 1 }}
+        initialMetrics={initialWindowMetrics}
+      >
+        <QueryClientProvider client={queryClient}>
+          <UpdateCheckProvider>
+            <StatusBar style="auto" animated />
+            <Stack screenOptions={{ headerShown: false }} />
+          </UpdateCheckProvider>
+        </QueryClientProvider>
+      </SafeAreaProvider>
+    </KeyboardProvider>
   );
 }
