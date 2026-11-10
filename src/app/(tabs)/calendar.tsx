@@ -5,11 +5,11 @@ import {
   ArrowLeftIcon,
   ArrowRightIcon,
   BubblesIcon,
-  DropletIcon,
   FlameKindlingIcon,
   type LucideIcon,
   MenuIcon,
   SquareTextIcon,
+  TargetIcon,
 } from "lucide-react-native";
 import { useLayoutEffect, useMemo, useState } from "react";
 import { Pressable, View } from "react-native";
@@ -175,7 +175,7 @@ export default function CalendarScreen() {
                     />
                   )}
                   {period && (
-                    <DropletIcon
+                    <TargetIcon
                       size={12}
                       color={date === selected ? Colors.white : Colors.danger}
                     />
@@ -198,22 +198,24 @@ export default function CalendarScreen() {
           })}
         </View>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
-          <Legend icon={DropletIcon} title={fa.calendar.periodLegend} />
+          <Legend icon={TargetIcon} title={fa.calendar.periodLegend} />
           <Legend icon={BubblesIcon} title={fa.calendar.ovulationLegend} />
           <Legend icon={FlameKindlingIcon} title={fa.calendar.pmsLegend} />
           <Legend icon={SquareTextIcon} title={fa.calendar.noteLegend} />
         </View>
       </Card>
       <Card>
-        <Text
-          style={{
-            color: Colors.ink,
-            fontSize: 17,
-            fontWeight: "700",
-          }}
-        >
-          {jalaliDateLabel(new Date(`${selected}T12:00:00`))}
-        </Text>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text
+            style={{
+              color: Colors.ink,
+              fontSize: 17,
+              fontWeight: "700",
+            }}
+          >
+            {jalaliDateLabel(new Date(`${selected}T12:00:00`))}
+          </Text>
+        </View>
         <Text style={{ color: Colors.muted }}>
           {dateIsIn(estimate?.periodDates)
             ? fa.calendar.recordedPeriod

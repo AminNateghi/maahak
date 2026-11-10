@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 import fa from "@/i18n/fa.json";
-import { Colors, Styles, Text } from "@/ui";
+import { Colors, Page, Styles, Text } from "@/ui";
 import MenuItem from "@/ui/menu-item";
 
 export default function MenuScreen() {
@@ -50,50 +50,45 @@ export default function MenuScreen() {
 
         <View style={Styles.separator} />
 
-        <ScrollView
-          style={styles.drawerContent}
-          showsVerticalScrollIndicator={false}
-        >
-          <MenuItem
-            title={fa.drawer.profile}
-            description={fa.drawer.profilePrompt}
-            onPress={() => router.navigate("/pages/profile")}
-          />
-          <MenuItem
-            title={fa.drawer.weight}
-            description={fa.drawer.weightPrompt}
-            onPress={() => router.navigate("/pages/trends")}
-          />
-          <MenuItem
-            title={fa.drawer.medicine}
-            description={fa.drawer.medicinePrompt}
-            onPress={() => router.navigate("/pages/medicine")}
-          />
+        <MenuItem
+          title={fa.drawer.profile}
+          description={fa.drawer.profilePrompt}
+          onPress={() => router.navigate("/pages/profile")}
+        />
+        <MenuItem
+          title={fa.drawer.weight}
+          description={fa.drawer.weightPrompt}
+          onPress={() => router.navigate("/pages/trends")}
+        />
+        <MenuItem
+          title={fa.drawer.medicine}
+          description={fa.drawer.medicinePrompt}
+          onPress={() => router.navigate("/pages/medicine")}
+        />
 
-          <View style={Styles.separator} />
+        <View style={Styles.separator} />
 
-          <MenuItem
-            title={fa.drawer.about}
-            description={fa.drawer.aboutPrompt}
-            onPress={() => router.navigate("/pages/about")}
-          />
-          <MenuItem
-            title={fa.drawer.update}
-            description={fa.drawer.updatePrompt}
-            onPress={() => router.navigate("/pages/check-update")}
-          />
-          <MenuItem
-            title={fa.drawer.changes}
-            description={fa.drawer.changesPrompt}
-            onPress={() => router.navigate("/pages/changelog")}
-          />
-          <View style={Styles.separator} />
-          <MenuItem
-            title={fa.drawer.disclaimer}
-            description={fa.drawer.disclaimerPrompt}
-            onPress={() => router.navigate("/pages/disclaimer")}
-          />
-        </ScrollView>
+        <MenuItem
+          title={fa.drawer.about}
+          description={fa.drawer.aboutPrompt}
+          onPress={() => router.navigate("/pages/about")}
+        />
+        <MenuItem
+          title={fa.drawer.update}
+          description={fa.drawer.updatePrompt}
+          onPress={() => router.navigate("/pages/check-update")}
+        />
+        <MenuItem
+          title={fa.drawer.changes}
+          description={fa.drawer.changesPrompt}
+          onPress={() => router.navigate("/pages/changelog")}
+        />
+        <View style={Styles.separator} />
+        <MenuItem
+          title={fa.drawer.disclaimer}
+          description={fa.drawer.disclaimerPrompt}
+          onPress={() => router.navigate("/pages/disclaimer")}
+        />
 
         <View style={styles.footer}>
           <Image

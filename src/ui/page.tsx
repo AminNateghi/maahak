@@ -1,15 +1,16 @@
 import type { PropsWithChildren } from "react";
-import { ScrollView } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { Styles } from "./theme";
 
 export function Page({ children }: PropsWithChildren) {
   return (
-    <ScrollView
+    <KeyboardAwareScrollView
       style={Styles.page}
       contentContainerStyle={Styles.content}
       keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag"
     >
       {children}
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }

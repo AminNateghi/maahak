@@ -65,24 +65,22 @@ export default function ChangelogScreen() {
 
   return (
     <Page>
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <Card>
-          {entries.map((entry) => (
-            <Text
-              key={entry.key}
-              style={[
-                styles.entry,
+      <Card>
+        {entries.map((entry) => (
+          <Text
+            key={entry.key}
+            style={[
+              styles.entry,
 
-                entry.type === "version" && styles.versionRTL,
-                entry.type === "item" && styles.itemRTL,
-              ]}
-            >
-              {entry.type === "item" ? `• ${entry.text}` : entry.text}
-            </Text>
-          ))}
-        </Card>
-        <View style={styles.footer} />
-      </ScrollView>
+              entry.type === "version" && styles.versionRTL,
+              entry.type === "item" && styles.itemRTL,
+            ]}
+          >
+            {entry.type === "item" ? `• ${entry.text}` : entry.text}
+          </Text>
+        ))}
+      </Card>
+      <View style={styles.footer} />
     </Page>
   );
 }

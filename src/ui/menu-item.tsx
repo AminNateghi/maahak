@@ -27,7 +27,7 @@ export default function MenuItem({
         <Text style={styles.itemDescription}>{description}</Text>
       </View>
 
-      <ChevronLeftIcon size={19} color={Colors.border} />
+      <ChevronLeftIcon size={20} color={Colors.border} />
     </Pressable>
   );
 }
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: 6,
     gap: 12,
     borderRadius: 12,
   },

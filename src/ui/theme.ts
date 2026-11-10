@@ -28,6 +28,7 @@ export const Styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 44,
     gap: 16,
+    flexGrow: 1,
   },
   title: {
     color: Colors.ink,
