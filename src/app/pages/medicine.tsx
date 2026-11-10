@@ -82,7 +82,7 @@ export default function MedicineScreen() {
       await queryClient.invalidateQueries({
         queryKey: ["medication-reminders"],
       });
-      Toast({ text: fa.medicine.reminderSavedMessage });
+      Toast({ text: fa.common.saved });
     },
   });
   const removeMutation = useMutation({

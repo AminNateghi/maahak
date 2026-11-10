@@ -9,7 +9,7 @@ import { z } from "zod";
 import { getProfile, updateProfileDetails } from "@/db/repository";
 import fa from "@/i18n/fa.json";
 import { formatMessage } from "@/i18n/format";
-import { jalaliDateLabel } from "@/lib/dates";
+import { jalaliDateLabel, toPersianDigits } from "@/lib/dates";
 import { Button, Card, ChoiceGroup, Field, Page, Text } from "@/ui";
 import DeleteAllRecords from "@/ui/delete-all-records";
 import { IconButton } from "@/ui/icon-button";
@@ -271,18 +271,20 @@ export default function ProfileScreen() {
               <ProfileRow label={fa.onboarding.name} value={user.name} />
               <ProfileRow
                 label={fa.onboarding.age}
-                value={formatMessage(fa.profile.ageYears, { age: user.age })}
+                value={formatMessage(fa.profile.ageYears, {
+                  age: toPersianDigits(user.age),
+                })}
               />
               <ProfileRow
                 label={fa.onboarding.height}
                 value={formatMessage(fa.profile.height, {
-                  height: user.heightCm,
+                  height: toPersianDigits(user.heightCm),
                 })}
               />
               <ProfileRow
                 label={fa.onboarding.currentWeight}
                 value={formatMessage(fa.profile.initialWeight, {
-                  weight: user.initialWeightKg,
+                  weight: toPersianDigits(user.initialWeightKg),
                 })}
               />
               <ProfileRow
@@ -298,11 +300,11 @@ export default function ProfileScreen() {
               />
               <ProfileRow
                 label={fa.profile.cycleLength}
-                value={`${user.averageCycleDays} ${fa.common.days}`}
+                value={`${toPersianDigits(user.averageCycleDays)} ${fa.common.days}`}
               />
               <ProfileRow
                 label={fa.profile.periodDuration}
-                value={`${user.periodDurationDays} ${fa.common.days}`}
+                value={`${toPersianDigits(user.periodDurationDays)} ${fa.common.days}`}
               />
               <ProfileRow
                 label={fa.profile.lastPeriod}
