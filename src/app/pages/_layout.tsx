@@ -29,6 +29,7 @@ export default function TabLayout() {
       <Tabs.Screen name="profile" />
       <Tabs.Screen name="trends" />
       <Tabs.Screen name="about" />
+      <Tabs.Screen name="check-update" />
     </Tabs>
   );
 }

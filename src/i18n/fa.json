@@ -457,6 +457,17 @@
     "sourceOn": "سورس‌کد در",
     "github": "گیت‌هاب",
     "version": "نسخه: ",
-    "storyTitle": "داستان ساخت:"
+    "storyTitle": "داستان ساخت:",
+    "needInternet": "برنامه فقط برای بخش به‌روزرسانی به اینترنت نیاز دارد."
+  },
+  "checkUpdate": {
+    "title": "بررسی نسخه برنامه",
+    "loading": "درحال بررسی...",
+    "newVersion": "نسخه جدید",
+    "checkForUpdate": "بررسی نسخه",
+    "buttonDownload": "دانلود آخرین نسخه",
+    "error": "خطا در بررسی نسخه برنامه!",
+    "noUpdateAvailable": "از آخرین نسخه استفاده می‌کنید.",
+    "updateAvailable": "نسخه جدید از برنامه منتشر شده است."
   }
 }

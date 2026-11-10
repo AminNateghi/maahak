@@ -56,6 +56,9 @@ export default function AboutScreen() {
         </View>
         <Text>{fa.about.description}</Text>
       </Card>
+      <Card>
+        <Text>{fa.about.needInternet}</Text>
+      </Card>
 
       <Card>
         <Text style={styles.title}>{fa.about.storyTitle}</Text>

@@ -6,8 +6,9 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
+import { UpdateCheckProvider } from "@/context/update-check-context";
 import { db } from "@/db/client";
-import migrations from "@/db/migrations";
+import migrations from "@/db/migrations/migrations";
 import fa from "@/i18n/fa.json";
 import { refreshMedicationNotifications } from "@/lib/notifications";
 import { queryClient } from "@/lib/query";
@@ -80,8 +81,10 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <StatusBar style="auto" animated />
-      <Stack screenOptions={{ headerShown: false }} />
+      <UpdateCheckProvider>
+        <StatusBar style="auto" animated />
+        <Stack screenOptions={{ headerShown: false }} />
+      </UpdateCheckProvider>
     </QueryClientProvider>
   );
 }
