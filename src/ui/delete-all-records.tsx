@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
-import { Alert } from "react-native";
+import { useState } from "react";
 import { deleteAllHealthData, listReminders } from "@/db/repository";
 import fa from "@/i18n/fa.json";
 import { formatMessage } from "@/i18n/format";
@@ -8,11 +8,14 @@ import { cancelMedicationNotifications } from "@/lib/notifications";
 import { queryClient } from "@/lib/query";
 import { Button } from "./button";
 import { Card } from "./card";
+import { ConfirmationDialog } from "./confirmation-dialog";
 import { Notice } from "./notice";
 import { Text } from "./text";
 import { Colors } from "./theme";
 
 export default function DeleteAllRecords() {
+  const [deleteDialog, setDeleteDialog] = useState<boolean>(false);
+
   const { data: reminders = [], isLoading: remindersLoading } = useQuery({
     queryKey: ["medication-reminders"],
     queryFn: listReminders,
@@ -31,17 +34,6 @@ export default function DeleteAllRecords() {
     },
   });
 
-  const confirmDeleteAll = () => {
-    Alert.alert(fa.profile.deleteAllTitle, fa.profile.deleteAllQuestion, [
-      { text: fa.common.cancel, style: "cancel" },
-      {
-        text: fa.profile.deleteAllConfirm,
-        style: "destructive",
-        onPress: () => deleteAllMutation.mutate(),
-      },
-    ]);
-  };
-
   return (
     <Card>
       <Notice tone="neutral">{fa.profile.deleteAllDescription}</Notice>
@@ -52,7 +44,7 @@ export default function DeleteAllRecords() {
             : fa.profile.deleteAll
         }
         secondary
-        onPress={confirmDeleteAll}
+        onPress={() => setDeleteDialog(true)}
         disabled={deleteAllMutation.isPending || remindersLoading}
       />
       {deleteAllMutation.error ? (
@@ -62,6 +54,13 @@ export default function DeleteAllRecords() {
           })}
         </Text>
       ) : null}
+
+      <ConfirmationDialog
+        visible={deleteDialog}
+        message={fa.profile.deleteAllQuestion}
+        onConfirm={() => deleteAllMutation.mutate()}
+        onCancel={() => setDeleteDialog(false)}
+      />
     </Card>
   );
 }
