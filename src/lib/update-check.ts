@@ -20,7 +20,7 @@ export async function fetchUpdateAvailability(): Promise<UpdateCheckResult> {
 
   const release = await response.json();
 
-  if (release || release.draft || release.prerelease) {
+  if (release?.draft || release?.prerelease) {
     return { available: false };
   }
 
