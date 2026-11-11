@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { router, useNavigation } from "expo-router";
-import { ArrowRightIcon } from "lucide-react-native";
+import { ArrowRightIcon, TrashIcon } from "lucide-react-native";
 import { useLayoutEffect, useState } from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import { deleteReminder, listReminders, saveReminder } from "@/db/repository";
 import fa from "@/i18n/fa.json";
 import { formatMessage } from "@/i18n/format";
@@ -25,12 +25,18 @@ import {
   TimeField,
   Toast,
 } from "@/ui";
+import { ConfirmationDialog } from "@/ui/confirmation-dialog";
 import { IconButton } from "@/ui/icon-button";
 
 const intervals = ["4", "6", "8", "12", "24"] as const;
 
 export default function MedicineScreen() {
   const navigation = useNavigation();
+  const [deleteDialog, setDeleteDialog] = useState<{
+    id: number;
+    notificationId: string;
+    visible: boolean;
+  }>({ id: 0, notificationId: "", visible: false });
   const [medication, setMedication] = useState("");
   const [interval, setInterval] = useState<string>("8");
   const [firstDate, setFirstDate] = useState(toIsoDate());
@@ -86,30 +92,13 @@ export default function MedicineScreen() {
     },
   });
   const removeMutation = useMutation({
-    mutationFn: async (reminder: (typeof reminders)[number]) => {
-      await cancelMedicationNotifications(reminder.notificationId);
-      await deleteReminder(reminder.id);
+    mutationFn: async (record: { id: number; notificationId: string }) => {
+      await cancelMedicationNotifications(record.notificationId);
+      await deleteReminder(record.id);
     },
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ["medication-reminders"] }),
   });
-
-  const confirmDelete = (reminder: (typeof reminders)[number]) => {
-    Alert.alert(
-      fa.medicine.deleteReminderTitle,
-      formatMessage(fa.medicine.deleteReminderQuestion, {
-        name: reminder.medicationName,
-      }),
-      [
-        { text: fa.common.cancel, style: "cancel" },
-        {
-          text: fa.common.delete,
-          style: "destructive",
-          onPress: () => removeMutation.mutate(reminder),
-        },
-      ],
-    );
-  };
 
   return (
     <Page>
@@ -163,26 +152,33 @@ export default function MedicineScreen() {
                 borderBottomColor: Colors.border,
               }}
             >
-              <Text
-                style={{
-                  color: Colors.ink,
-                  fontWeight: "700",
-                }}
-              >
-                {reminder.medicationName}
-              </Text>
-              <Text style={{ color: Colors.muted }}>
-                {formatMessage(fa.medicine.everyHours, {
-                  hours: reminder.intervalHours,
-                  date: jalaliDateLabel(new Date(reminder.firstDoseAt)),
-                  time: localTimeLabel(new Date(reminder.firstDoseAt)),
-                })}
-              </Text>
-              <Button
-                title={fa.medicine.deleteReminder}
-                secondary
-                onPress={() => confirmDelete(reminder)}
-              />
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text
+                  style={{
+                    color: Colors.ink,
+                    fontWeight: "700",
+                  }}
+                >
+                  {reminder.medicationName}
+                </Text>
+                <Text style={{ color: Colors.muted }}>
+                  {formatMessage(fa.medicine.everyHours, {
+                    hours: reminder.intervalHours,
+                    date: jalaliDateLabel(new Date(reminder.firstDoseAt)),
+                    time: localTimeLabel(new Date(reminder.firstDoseAt)),
+                  })}
+                </Text>
+                <IconButton
+                  icon={<TrashIcon color={Colors.primary} />}
+                  onPress={() =>
+                    setDeleteDialog({
+                      id: reminder.id,
+                      notificationId: reminder.notificationId,
+                      visible: true,
+                    })
+                  }
+                />
+              </View>
             </View>
           ))
         ) : (
@@ -196,6 +192,14 @@ export default function MedicineScreen() {
           </Text>
         ) : null}
       </Card>
+      <ConfirmationDialog
+        visible={deleteDialog.visible}
+        message={fa.medicine.deleteReminderQuestion}
+        onConfirm={() => removeMutation.mutate(deleteDialog)}
+        onCancel={() =>
+          setDeleteDialog({ id: 0, notificationId: "", visible: false })
+        }
+      />
     </Page>
   );
 }

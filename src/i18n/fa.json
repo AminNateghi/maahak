@@ -438,8 +438,7 @@
     "everyHours": "هر {hours} ساعت · شروع {date}، ساعت {time}",
     "deleteReminder": "حذف یادآور",
     "noReminders": "هنوز یادآوری تنظیم نکرده‌ای.",
-    "deleteReminderTitle": "حذف یادآور؟",
-    "deleteReminderQuestion": "یادآور {name} حذف شود؟",
+    "deleteReminderQuestion": "این یادآوری رو حذف می‌کنی؟",
     "deleteReminderFailed": "حذف یادآور انجام نشد: {error}"
   },
   "notifications": {
