@@ -157,16 +157,10 @@ export default function MedicineScreen() {
                   style={{
                     color: Colors.ink,
                     fontWeight: "700",
+                    flex: 1,
                   }}
                 >
                   {reminder.medicationName}
-                </Text>
-                <Text style={{ color: Colors.muted }}>
-                  {formatMessage(fa.medicine.everyHours, {
-                    hours: reminder.intervalHours,
-                    date: jalaliDateLabel(new Date(reminder.firstDoseAt)),
-                    time: localTimeLabel(new Date(reminder.firstDoseAt)),
-                  })}
                 </Text>
                 <IconButton
                   icon={<TrashIcon color={Colors.primary} />}
@@ -179,6 +173,14 @@ export default function MedicineScreen() {
                   }
                 />
               </View>
+
+              <Text style={{ color: Colors.muted, flex: 1 }}>
+                {formatMessage(fa.medicine.everyHours, {
+                  hours: reminder.intervalHours,
+                  date: jalaliDateLabel(new Date(reminder.firstDoseAt)),
+                  time: localTimeLabel(new Date(reminder.firstDoseAt)),
+                })}
+              </Text>
             </View>
           ))
         ) : (
