@@ -125,11 +125,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: Colors.border + 20,
   },
-  drawerContent: {
-    flex: 1,
-  },
   footer: {
     marginTop: "auto",
+    marginBottom: 50,
     paddingTop: 20,
     borderTopWidth: 1,
     borderTopColor: Colors.border + 20,

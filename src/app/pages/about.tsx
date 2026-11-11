@@ -45,7 +45,7 @@ export default function AboutScreen() {
           <Image
             width={36}
             height={36}
-            source={require("./../../../assets/images/maahak-icon.png")}
+            source={require("./../../../assets/images/maahak-icon-transparency.png")}
             style={styles.icon}
           />
           <Text style={styles.appName}>{fa.appName}</Text>
