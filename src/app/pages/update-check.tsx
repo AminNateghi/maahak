@@ -22,7 +22,7 @@ export default function UpdateCheckScreen() {
         display: "none",
       },
       headerRight: () => (
-        <IconButton icon={ArrowRightIcon} onPress={() => router.back()} />
+        <IconButton icon={<ArrowRightIcon />} onPress={() => router.back()} />
       ),
       headerLeft: () => <></>,
     });

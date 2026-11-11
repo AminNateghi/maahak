@@ -1,14 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { router, useNavigation } from "expo-router";
-import { ArrowRightIcon } from "lucide-react-native";
+import { ArrowRightIcon, TrashIcon } from "lucide-react-native";
 import { useLayoutEffect, useState } from "react";
 import { View } from "react-native";
 import Svg, { Circle, Line, Polyline, Text as SvgText } from "react-native-svg";
 import {
+  deleteWeight,
   getProfile,
   listWeightEntries,
   saveWeightEntry,
 } from "@/db/repository";
+import { weightEntries } from "@/db/schema";
 import fa from "@/i18n/fa.json";
 import { formatMessage } from "@/i18n/format";
 import { jalaliDateLabel, toIsoDate, toPersianDigits } from "@/lib/dates";
@@ -22,6 +24,7 @@ import {
   Text,
   Toast,
 } from "@/ui";
+import { ConfirmationDialog } from "@/ui/confirmation-dialog";
 import { IconButton } from "@/ui/icon-button";
 import { Colors, Styles } from "@/ui/theme";
 
@@ -31,6 +34,10 @@ const chartHeight = 180;
 export default function TrendsScreen() {
   const navigation = useNavigation();
   const queryClient = useQueryClient();
+  const [deleteDialog, setDeleteDialog] = useState<{
+    id: number;
+    visible: boolean;
+  }>({ id: 0, visible: false });
   const [weight, setWeight] = useState("");
   const [entryDate, setEntryDate] = useState(toIsoDate());
   const { data: entries = [] } = useQuery({
@@ -41,6 +48,7 @@ export default function TrendsScreen() {
     queryKey: ["profile"],
     queryFn: getProfile,
   });
+
   const addMutation = useMutation({
     mutationFn: async () => {
       const parsed = Number(weight);
@@ -55,6 +63,16 @@ export default function TrendsScreen() {
     },
   });
 
+  const removeMutation = useMutation({
+    mutationFn: async (id: number) => {
+      await deleteWeight(id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["weight-entries"] });
+      setDeleteDialog({ id: deleteDialog.id, visible: false });
+    },
+  });
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: fa.trends.title,
@@ -64,7 +82,7 @@ export default function TrendsScreen() {
       },
       headerLeft: () => <></>,
       headerRight: () => (
-        <IconButton icon={ArrowRightIcon} onPress={() => router.back()} />
+        <IconButton icon={<ArrowRightIcon />} onPress={() => router.back()} />
       ),
     });
   }, [navigation]);
@@ -205,6 +223,7 @@ export default function TrendsScreen() {
       </Card>
       <Card>
         <Text style={Styles.sectionTitle}>{fa.trends.history}</Text>
+        {entries.length === 0 && <Text>{fa.trends.noEntries}</Text>}
         {entries
           .slice()
           .reverse()
@@ -223,14 +242,30 @@ export default function TrendsScreen() {
                   "D MMMM",
                 )}
               </Text>
-              <Text style={{ color: Colors.ink, fontWeight: "700" }}>
-                {toPersianDigits(entry.weightKg.toFixed(1))}{" "}
-                {fa.common.kilograms}
-              </Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={{ color: Colors.ink, fontWeight: "700" }}>
+                  {toPersianDigits(entry.weightKg.toFixed(1))}{" "}
+                  {fa.common.kilograms}
+                </Text>
+                <IconButton
+                  icon={<TrashIcon color={Colors.primary} />}
+                  onPress={() =>
+                    setDeleteDialog({ id: entry.id, visible: true })
+                  }
+                />
+              </View>
             </View>
           ))}
       </Card>
       <Notice tone="neutral">{fa.trends.weightDisclaimer}</Notice>
+      <ConfirmationDialog
+        visible={deleteDialog.visible}
+        message={fa.trends.deleteMessage}
+        onConfirm={() => removeMutation.mutate(deleteDialog.id)}
+        onCancel={() =>
+          setDeleteDialog({ id: deleteDialog.id, visible: false })
+        }
+      />
     </Page>
   );
 }

@@ -42,7 +42,10 @@ export default function CalendarScreen() {
       headerTitleAlign: "center",
       headerLeft: () => null,
       headerRight: () => (
-        <IconButton icon={MenuIcon} onPress={() => router.navigate("/pages")} />
+        <IconButton
+          icon={<MenuIcon />}
+          onPress={() => router.navigate("/pages")}
+        />
       ),
     });
   }, [navigation, router]);

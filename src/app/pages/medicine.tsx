@@ -41,7 +41,7 @@ export default function MedicineScreen() {
       title: fa.medicine.title,
       headerLeft: () => <></>,
       headerRight: () => (
-        <IconButton icon={ArrowRightIcon} onPress={() => router.back()} />
+        <IconButton icon={<ArrowRightIcon />} onPress={() => router.back()} />
       ),
     });
   }, [navigation]);

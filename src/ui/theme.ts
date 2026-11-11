@@ -83,6 +83,7 @@ export const Styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 18,
+    flex: 1,
   },
   buttonText: {
     color: Colors.white,

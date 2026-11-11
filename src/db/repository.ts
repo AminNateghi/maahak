@@ -157,6 +157,10 @@ export async function saveWeightEntry(entryDate: string, weightKg: number) {
     });
 }
 
+export async function deleteWeight(id: number) {
+  await db.delete(weightEntries).where(eq(weightEntries.id, id));
+}
+
 export async function listReminders() {
   return db
     .select()

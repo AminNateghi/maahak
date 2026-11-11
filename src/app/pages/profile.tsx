@@ -91,7 +91,7 @@ export default function ProfileScreen() {
       },
       headerLeft: () => <></>,
       headerRight: () => (
-        <IconButton icon={ArrowRightIcon} onPress={() => router.back()} />
+        <IconButton icon={<ArrowRightIcon />} onPress={() => router.back()} />
       ),
     });
   }, [navigation]);
