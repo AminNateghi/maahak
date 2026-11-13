@@ -166,6 +166,9 @@ importers:
 
   .:
     dependencies:
+      '@expo/config-plugins':
+        specifier: ~58.0.12
+        version: 58.0.12(supports-color@8.1.1)(typescript@6.0.3)
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.9.2(@sinclair/typebox@0.27.12)(react-hook-form@7.91.0(@types/react@19.3.0)(react@19.3.0))(zod@4.6.7)
