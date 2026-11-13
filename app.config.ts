@@ -12,7 +12,8 @@ const config: ExpoConfig = {
   plugins: [
     "expo-router",
     "expo-font",
-    ["expo-sqlite", { enableFTS: false }],
+    "expo-status-bar",
+    "expo-sqlite",
     ["expo-notifications", { color: "#9B5475" }],
     [
       "expo-splash-screen",
