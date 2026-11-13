@@ -31,11 +31,11 @@ export default function AboutScreen() {
   }, [navigation]);
 
   const handleMyWebSite = () => {
-    Linking.openURL("https://nateghi.xyz/");
+    Linking.openURL("https://nateghi.xyz/fa/");
   };
 
   const handleSourceCode = () => {
-    Linking.openURL("https://github.com/AminNateghi/yadli-react-native");
+    Linking.openURL("https://github.com/AminNateghi/maahak");
   };
 
   return (
