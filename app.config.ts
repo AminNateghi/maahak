@@ -4,7 +4,7 @@ const config: ExpoConfig = {
   name: "Maahak",
   slug: "maahak",
   scheme: "maahak",
-  version: "1.1.2",
+  version: "1.2.0",
   orientation: "portrait",
   userInterfaceStyle: "light",
   icon: "./assets/images/maahak-icon.png",
@@ -26,10 +26,18 @@ const config: ExpoConfig = {
         },
       },
     ],
+    "expo-sharing",
+    [
+      "expo-file-system",
+      {
+        supportsOpeningDocumentsInPlace: true,
+        enableFileSharing: true,
+      },
+    ],
     "./plugins/with-android-release-signing",
   ],
   android: {
-    versionCode: 112,
+    versionCode: 120,
     package: "xyz.nateghi.maahak",
     allowBackup: false,
     permissions: ["POST_NOTIFICATIONS", "VIBRATE"],

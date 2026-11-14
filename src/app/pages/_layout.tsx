@@ -31,6 +31,7 @@ export default function TabLayout() {
       <Tabs.Screen name="about" />
       <Tabs.Screen name="update-check" />
       <Tabs.Screen name="changelog" />
+      <Tabs.Screen name="database" />
     </Tabs>
   );
 }

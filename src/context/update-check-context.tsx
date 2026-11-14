@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import SQLiteKVStore from "expo-sqlite/kv-store";
 import {
   createContext,
   type PropsWithChildren,
@@ -8,11 +8,12 @@ import {
   useMemo,
   useState,
 } from "react";
-import { getSettings, saveSettings } from "@/db/repository";
 import {
   fetchUpdateAvailability,
   type UpdateCheckResult,
 } from "@/lib/update-check";
+
+const STORAGE_KEY = "update-check-result";
 
 type CachedResult = {
   checkedOn: string;
@@ -35,21 +36,15 @@ function getToday() {
 
 export function UpdateCheckProvider({ children }: PropsWithChildren) {
   const [updateAvailable, setUpdateAvailable] = useState(false);
-  const { data: settings } = useQuery({
-    queryKey: ["settings"],
-    queryFn: getSettings,
-  });
 
   useEffect(() => {
-    if (!settings) return;
-
     let active = true;
 
     async function checkOncePerDay() {
       const today = getToday();
 
       try {
-        const cachedValue = settings?.appUpdateCheckResult;
+        const cachedValue = await SQLiteKVStore.getItem(STORAGE_KEY);
         if (cachedValue) {
           const cached = JSON.parse(cachedValue) as CachedResult;
           if (cached.checkedOn === today) {
@@ -60,22 +55,19 @@ export function UpdateCheckProvider({ children }: PropsWithChildren) {
           }
         }
 
-        await saveSettings({
-          ...settings!,
-          appUpdateCheckResult: JSON.stringify({
+        await SQLiteKVStore.setItem(
+          STORAGE_KEY,
+          JSON.stringify({
             checkedOn: today,
             result: null,
           } satisfies CachedResult),
-        });
+        );
 
         const result = await fetchUpdateAvailability();
-        await saveSettings({
-          ...settings!,
-          appUpdateCheckResult: JSON.stringify({
-            checkedOn: today,
-            result,
-          } satisfies CachedResult),
-        });
+        await SQLiteKVStore.setItem(
+          STORAGE_KEY,
+          JSON.stringify({ checkedOn: today, result } satisfies CachedResult),
+        );
 
         if (active) {
           setUpdateAvailable(result.available);
@@ -90,21 +82,20 @@ export function UpdateCheckProvider({ children }: PropsWithChildren) {
     return () => {
       active = false;
     };
-  }, [settings]);
+  }, []);
 
   const checkNow = useCallback(async () => {
     const result = await fetchUpdateAvailability();
     setUpdateAvailable(result.available);
-    await saveSettings({
-      ...settings!,
-      appUpdateCheckResult: JSON.stringify({
+    await SQLiteKVStore.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
         checkedOn: getToday(),
         result,
       } satisfies CachedResult),
-    });
-
+    );
     return result;
-  }, [settings]);
+  }, []);
 
   const value = useMemo(
     () => ({ updateAvailable, checkNow }),

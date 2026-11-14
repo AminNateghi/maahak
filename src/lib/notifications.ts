@@ -1,6 +1,9 @@
+import { eq } from "drizzle-orm";
 import * as Notifications from "expo-notifications";
+import { Platform } from "react-native";
+import { db } from "@/db/client";
 import { listReminders, updateReminderNotifications } from "@/db/repository";
-import type { MedicationReminder } from "@/db/schema";
+import { type MedicationReminder, medicationReminders } from "@/db/schema";
 import fa from "@/i18n/fa.json";
 
 type Dose = { id: string; at: string };
@@ -185,5 +188,48 @@ function parseDoses(notificationIds: string): Dose[] {
       typeof dose.id === "string" &&
       "at" in dose &&
       typeof dose.at === "string",
+  );
+}
+
+export async function removeAllReminderNotifications(): Promise<void> {
+  if (Platform.OS === "web") return;
+
+  const scheduled = await Notifications.getAllScheduledNotificationsAsync();
+  const scheduledReminders = scheduled.filter(
+    (notification) => notification.content.data?.reminderId !== undefined,
+  );
+  await Promise.all(
+    scheduledReminders.map((notification) =>
+      Notifications.cancelScheduledNotificationAsync(notification.identifier),
+    ),
+  );
+
+  const presented = await Notifications.getPresentedNotificationsAsync();
+  const presentedReminders = presented.filter(
+    (notification) =>
+      notification.request.content.data?.reminderId !== undefined,
+  );
+  await Promise.all(
+    presentedReminders.map((notification) =>
+      Notifications.dismissNotificationAsync(notification.request.identifier),
+    ),
+  );
+}
+
+export async function syncReminderNotifications(id: number): Promise<void> {
+  if (Platform.OS === "web") return;
+
+  const reminders = await db
+    .select()
+    .from(medicationReminders)
+    .where(eq(medicationReminders.id, id));
+  await Promise.all(
+    reminders.map((item) =>
+      scheduleMedication(
+        item.medicationName,
+        item.intervalHours,
+        item.firstDoseAt,
+      ),
+    ),
   );
 }

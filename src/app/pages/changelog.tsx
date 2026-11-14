@@ -5,7 +5,7 @@ import { StyleSheet, View } from "react-native";
 import fa from "@/i18n/fa.json";
 import { Card, Colors, Page, Text } from "@/ui";
 import { IconButton } from "@/ui/icon-button";
-import changelogFa from "./../../../CHANGELOG.md";
+import changelogFa from "../../../CHANGELOG.md";
 
 type ChangelogEntry = {
   key: string;

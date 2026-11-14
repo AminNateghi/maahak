@@ -1,7 +1,7 @@
 import { router, useNavigation } from "expo-router";
 import { XIcon } from "lucide-react-native";
 import { useLayoutEffect } from "react";
-import { Image, Pressable, StyleSheet, View } from "react-native";
+import { Image, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import fa from "@/i18n/fa.json";
 import { Colors, Styles, Text } from "@/ui";
 import MenuItem from "@/ui/menu-item";
@@ -43,45 +43,53 @@ export default function MenuScreen() {
 
         <View style={Styles.separator} />
 
-        <MenuItem
-          title={fa.drawer.profile}
-          description={fa.drawer.profilePrompt}
-          onPress={() => router.navigate("/pages/profile")}
-        />
-        <MenuItem
-          title={fa.drawer.weight}
-          description={fa.drawer.weightPrompt}
-          onPress={() => router.navigate("/pages/trends")}
-        />
-        <MenuItem
-          title={fa.drawer.medicine}
-          description={fa.drawer.medicinePrompt}
-          onPress={() => router.navigate("/pages/medicine")}
-        />
+        <ScrollView>
+          <MenuItem
+            title={fa.drawer.profile}
+            description={fa.drawer.profilePrompt}
+            onPress={() => router.navigate("/pages/profile")}
+          />
+          <MenuItem
+            title={fa.drawer.weight}
+            description={fa.drawer.weightPrompt}
+            onPress={() => router.navigate("/pages/trends")}
+          />
+          <MenuItem
+            title={fa.drawer.medicine}
+            description={fa.drawer.medicinePrompt}
+            onPress={() => router.navigate("/pages/medicine")}
+          />
 
-        <View style={Styles.separator} />
+          <View style={Styles.separator} />
 
-        <MenuItem
-          title={fa.drawer.about}
-          description={fa.drawer.aboutPrompt}
-          onPress={() => router.navigate("/pages/about")}
-        />
-        <MenuItem
-          title={fa.drawer.update}
-          description={fa.drawer.updatePrompt}
-          onPress={() => router.navigate("/pages/update-check")}
-        />
-        <MenuItem
-          title={fa.drawer.changes}
-          description={fa.drawer.changesPrompt}
-          onPress={() => router.navigate("/pages/changelog")}
-        />
-        <View style={Styles.separator} />
-        <MenuItem
-          title={fa.drawer.disclaimer}
-          description={fa.drawer.disclaimerPrompt}
-          onPress={() => router.navigate("/pages/disclaimer")}
-        />
+          <MenuItem
+            title={fa.drawer.about}
+            description={fa.drawer.aboutPrompt}
+            onPress={() => router.navigate("/pages/about")}
+          />
+          <MenuItem
+            title={fa.drawer.update}
+            description={fa.drawer.updatePrompt}
+            onPress={() => router.navigate("/pages/update-check")}
+          />
+          <MenuItem
+            title={fa.drawer.changes}
+            description={fa.drawer.changesPrompt}
+            onPress={() => router.navigate("/pages/changelog")}
+          />
+          <MenuItem
+            title={fa.drawer.database}
+            description={fa.drawer.databasePrompt}
+            onPress={() => router.navigate("/pages/database")}
+          />
+
+          <View style={Styles.separator} />
+          <MenuItem
+            title={fa.drawer.disclaimer}
+            description={fa.drawer.disclaimerPrompt}
+            onPress={() => router.navigate("/pages/disclaimer")}
+          />
+        </ScrollView>
 
         <View style={styles.footer}>
           <Image
@@ -109,7 +117,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingBottom: 22,
+    paddingBottom: 10,
   },
   appName: {
     fontSize: 24,
@@ -128,7 +136,7 @@ const styles = StyleSheet.create({
   footer: {
     marginTop: "auto",
     marginBottom: 50,
-    paddingTop: 20,
+    paddingTop: 10,
     borderTopWidth: 1,
     borderTopColor: Colors.border + 20,
     flexDirection: "column",

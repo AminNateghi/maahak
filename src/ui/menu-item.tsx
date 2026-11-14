@@ -55,13 +55,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemTitle: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: "600",
     color: "#111827",
+    paddingRight: 10,
   },
   itemDescription: {
     fontSize: 12,
     color: "#6B7280",
-    marginTop: 4,
+    marginTop: 0,
+    paddingRight: 10,
   },
 });
