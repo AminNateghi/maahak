@@ -11,7 +11,6 @@ import {
   initialWindowMetrics,
   SafeAreaProvider,
 } from "react-native-safe-area-context";
-import { UpdateCheckProvider } from "@/context/update-check-context";
 import { db } from "@/db/client";
 import migrations from "@/db/migrations/migrations";
 import fa from "@/i18n/fa.json";
@@ -91,10 +90,8 @@ export default function RootLayout() {
         initialMetrics={initialWindowMetrics}
       >
         <QueryClientProvider client={queryClient}>
-          <UpdateCheckProvider>
-            <StatusBar style="auto" animated />
-            <Stack screenOptions={{ headerShown: false }} />
-          </UpdateCheckProvider>
+          <StatusBar style="auto" animated />
+          <Stack screenOptions={{ headerShown: false }} />
         </QueryClientProvider>
       </SafeAreaProvider>
     </KeyboardProvider>

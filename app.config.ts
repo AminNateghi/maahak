@@ -4,11 +4,21 @@ const config: ExpoConfig = {
   name: "Maahak",
   slug: "maahak",
   scheme: "maahak",
-  version: "1.2.0",
+  version: "1.2.1",
   orientation: "portrait",
-  userInterfaceStyle: "light",
+  userInterfaceStyle: "automatic",
   icon: "./assets/images/maahak-icon.png",
   platforms: ["android"],
+  android: {
+    versionCode: 121,
+    package: "xyz.nateghi.maahak",
+    allowBackup: false,
+    permissions: ["POST_NOTIFICATIONS", "VIBRATE"],
+    blockedPermissions: ["android.permission.SYSTEM_ALERT_WINDOW"],
+  },
+  experiments: {
+    typedRoutes: true,
+  },
   plugins: [
     "expo-router",
     "expo-font",
@@ -36,16 +46,6 @@ const config: ExpoConfig = {
     ],
     "./plugins/with-android-release-signing",
   ],
-  android: {
-    versionCode: 120,
-    package: "xyz.nateghi.maahak",
-    allowBackup: false,
-    permissions: ["POST_NOTIFICATIONS", "VIBRATE"],
-    blockedPermissions: ["android.permission.SYSTEM_ALERT_WINDOW"],
-  },
-  experiments: {
-    typedRoutes: true,
-  },
 };
 
 export default config;

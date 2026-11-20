@@ -68,11 +68,6 @@ export default function MenuScreen() {
             onPress={() => router.navigate("/pages/about")}
           />
           <MenuItem
-            title={fa.drawer.update}
-            description={fa.drawer.updatePrompt}
-            onPress={() => router.navigate("/pages/update-check")}
-          />
-          <MenuItem
             title={fa.drawer.changes}
             description={fa.drawer.changesPrompt}
             onPress={() => router.navigate("/pages/changelog")}

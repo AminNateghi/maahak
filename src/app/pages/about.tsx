@@ -34,10 +34,6 @@ export default function AboutScreen() {
     Linking.openURL("https://nateghi.xyz/fa/");
   };
 
-  const handleSourceCode = () => {
-    Linking.openURL("https://github.com/AminNateghi/maahak");
-  };
-
   return (
     <Page>
       <Card>
@@ -71,15 +67,6 @@ export default function AboutScreen() {
           <Pressable onPress={handleMyWebSite}>
             <Text style={styles.link}>
               {fa.about.developerName}
-              <ShareIcon color={Colors.primary} size={14} />
-            </Text>
-          </Pressable>
-        </View>
-        <View style={styles.developerContent}>
-          <Text>{fa.about.sourceOn}</Text>
-          <Pressable onPress={handleSourceCode}>
-            <Text style={styles.link}>
-              {fa.about.github}
               <ShareIcon color={Colors.primary} size={14} />
             </Text>
           </Pressable>
