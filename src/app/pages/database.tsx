@@ -1,3 +1,4 @@
+import { migrate } from "drizzle-orm/expo-sqlite/migrator";
 import { File, Paths } from "expo-file-system";
 import { router, useNavigation } from "expo-router";
 import * as Sharing from "expo-sharing";
@@ -10,6 +11,7 @@ import { ArrowRightIcon } from "lucide-react-native";
 import { useLayoutEffect, useRef, useState } from "react";
 import { Platform, StyleSheet } from "react-native";
 import { db, sqlite } from "@/db/client";
+import migrations from "@/db/migrations/migrations";
 import { medicationReminders } from "@/db/schema";
 import fa from "@/i18n/fa.json";
 import {
@@ -187,6 +189,7 @@ export default function DatabaseScreen() {
         sourceDatabase,
         destDatabase: sqlite,
       });
+      await migrate(db, migrations);
       let notificationSyncFailed = false;
       try {
         await removeAllReminderNotifications();
