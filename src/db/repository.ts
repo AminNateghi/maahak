@@ -3,6 +3,7 @@ import { desc, eq } from "drizzle-orm";
 import { toIsoDate } from "@/lib/dates";
 import { db } from "./client";
 import {
+  bloodPressureEntries,
   dailyLogs,
   medicationReminders,
   type NewProfile,
@@ -143,6 +144,36 @@ export async function deleteWeight(id: number) {
   await db.delete(weightEntries).where(eq(weightEntries.id, id));
 }
 
+export async function listBloodPressureEntries() {
+  return db
+    .select()
+    .from(bloodPressureEntries)
+    .orderBy(
+      bloodPressureEntries.entryDate,
+      bloodPressureEntries.entryTime,
+      bloodPressureEntries.id,
+    )
+    .all();
+}
+
+export async function saveBloodPressureEntry(input: {
+  entryDate: string;
+  entryTime: string;
+  systolic: number;
+  diastolic: number;
+  context: string;
+  note: string;
+}) {
+  await db.insert(bloodPressureEntries).values({
+    ...input,
+    createdAt: new Date().toISOString(),
+  });
+}
+
+export async function deleteBloodPressureEntry(id: number) {
+  await db.delete(bloodPressureEntries).where(eq(bloodPressureEntries.id, id));
+}
+
 export async function listReminders() {
   return db
     .select()
@@ -185,6 +216,7 @@ export async function deleteReminder(id: number) {
 export async function deleteAllHealthData() {
   await db.transaction(async (tx) => {
     await tx.delete(medicationReminders);
+    await tx.delete(bloodPressureEntries);
     await tx.delete(weightEntries);
     await tx.delete(dailyLogs);
     await tx.delete(periodStarts);

@@ -55,6 +55,11 @@ export default function MenuScreen() {
             onPress={() => router.navigate("/pages/trends")}
           />
           <MenuItem
+            title={fa.drawer.bloodPressure}
+            description={fa.drawer.bloodPressurePrompt}
+            onPress={() => router.navigate("/pages/blood-pressure")}
+          />
+          <MenuItem
             title={fa.drawer.medicine}
             description={fa.drawer.medicinePrompt}
             onPress={() => router.navigate("/pages/medicine")}

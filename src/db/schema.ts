@@ -38,6 +38,17 @@ export const weightEntries = sqliteTable("weight_entries", {
   createdAt: text("created_at").notNull(),
 });
 
+export const bloodPressureEntries = sqliteTable("blood_pressure_entries", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  entryDate: text("entry_date").notNull(),
+  entryTime: text("entry_time").notNull(),
+  systolic: integer("systolic").notNull(),
+  diastolic: integer("diastolic").notNull(),
+  context: text("context").notNull().default("none"),
+  note: text("note").notNull().default(""),
+  createdAt: text("created_at").notNull(),
+});
+
 export const medicationReminders = sqliteTable("medication_reminders", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   medicationName: text("medication_name").notNull(),
@@ -52,4 +63,5 @@ export type Profile = typeof profile.$inferSelect;
 export type NewProfile = typeof profile.$inferInsert;
 export type DailyLog = typeof dailyLogs.$inferSelect;
 export type WeightEntry = typeof weightEntries.$inferSelect;
+export type BloodPressureEntry = typeof bloodPressureEntries.$inferSelect;
 export type MedicationReminder = typeof medicationReminders.$inferSelect;
