@@ -4,6 +4,7 @@ import { useState } from "react";
 import { deleteAllHealthData, listReminders } from "@/db/repository";
 import fa from "@/i18n/fa.json";
 import { formatMessage } from "@/i18n/format";
+import { cancelCycleNotifications } from "@/lib/cycle-notifications";
 import { cancelMedicationNotifications } from "@/lib/notifications";
 import { queryClient } from "@/lib/query";
 import { Button } from "./button";
@@ -26,6 +27,7 @@ export default function DeleteAllRecords() {
       for (const reminder of reminders) {
         await cancelMedicationNotifications(reminder.notificationId);
       }
+      await cancelCycleNotifications();
       await deleteAllHealthData();
     },
     onSuccess: () => {

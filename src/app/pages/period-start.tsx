@@ -4,6 +4,7 @@ import { ArrowRightIcon } from "lucide-react-native";
 import { useLayoutEffect, useState } from "react";
 import { addPeriodStart } from "@/db/repository";
 import fa from "@/i18n/fa.json";
+import { refreshCycleNotifications } from "@/lib/cycle-notifications";
 import { toIsoDate } from "@/lib/dates";
 import { queryClient } from "@/lib/query";
 import { Button, Card, DateField, Notice, Page, Toast } from "@/ui";
@@ -21,6 +22,11 @@ export default function PeriodStartScreen() {
         queryClient.invalidateQueries({ queryKey: ["period-starts"] }),
         queryClient.invalidateQueries({ queryKey: ["profile"] }),
       ]);
+      try {
+        await refreshCycleNotifications();
+      } catch (error) {
+        console.error("Could not refresh cycle notifications", error);
+      }
       Toast({ text: fa.log.periodSavedMessage });
       router.navigate("/(tabs)");
     },

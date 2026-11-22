@@ -1,4 +1,4 @@
-import { addDays, daysBetween } from "./dates";
+import { addDays, daysBetween, toIsoDate } from "./dates";
 
 export type CycleProfile = {
   averageCycleDays: number;
@@ -8,6 +8,7 @@ export type CycleProfile = {
 
 export type CycleEstimate = {
   cycleDay: number;
+  periodStart: string;
   nextPeriodStart: string;
   ovulationDate: string;
   pmsStart: string;
@@ -37,14 +38,15 @@ export function estimateCycle(
 
   const elapsedDays = daysBetween(lastPeriodStart, today);
   if (elapsedDays < 0) return null;
-  const currentStart = lastPeriodStart;
-  const nextPeriodStart = addDays(lastPeriodStart, averageCycleDays);
+  const currentStart = toIsoDate(lastPeriodStart);
+  const nextPeriodStart = addDays(currentStart, averageCycleDays);
   const ovulationDate = addDays(nextPeriodStart, -14);
   const pmsStart = addDays(nextPeriodStart, -5);
   const cycleDay = daysBetween(currentStart, today) + 1;
 
   return {
     cycleDay,
+    periodStart: currentStart,
     nextPeriodStart,
     ovulationDate,
     pmsStart,

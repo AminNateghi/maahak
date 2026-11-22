@@ -12,6 +12,7 @@ test("estimates cycle day, next period, ovulation, and phases", () => {
   const result = estimateCycle("2024-03-01", "2024-03-15", regular);
   assert.ok(result);
   assert.equal(result.cycleDay, 15);
+  assert.equal(result.periodStart, "2024-03-01");
   assert.equal(result.nextPeriodStart, "2024-03-29");
   assert.equal(result.ovulationDate, "2024-03-15");
   assert.equal(result.pmsStart, "2024-03-24");

@@ -7,6 +7,7 @@ import { View } from "react-native";
 import { getProfile, listPeriodStarts } from "@/db/repository";
 import fa from "@/i18n/fa.json";
 import { estimateCycle } from "@/lib/cycle";
+import { getCycleMessageKey, pickCycleMessage } from "@/lib/cycle-reminders";
 import {
   daysBetween,
   jalaliDateLabel,
@@ -60,6 +61,12 @@ export default function HomeScreen() {
       },
     );
   }, [periodStarts, today, user]);
+
+  const cycleMessage = useMemo(() => {
+    if (!estimate) return null;
+    const key = getCycleMessageKey(estimate, today);
+    return key ? pickCycleMessage(key.phase, key.timing) : null;
+  }, [estimate, today]);
 
   if (!user)
     return (
@@ -139,6 +146,13 @@ export default function HomeScreen() {
           color={Colors.peach}
         />
       </View>
+
+      {cycleMessage ? (
+        <Card>
+          <Text style={Styles.sectionTitle}>{fa.home.cycleMessageTitle}</Text>
+          <Text style={Styles.subtitle}>{cycleMessage}</Text>
+        </Card>
+      ) : null}
 
       {estimate?.ovulationDates.has(today) && (
         <Notice tone="information">

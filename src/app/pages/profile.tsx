@@ -9,6 +9,7 @@ import { z } from "zod";
 import { getProfile, updateProfileDetails } from "@/db/repository";
 import fa from "@/i18n/fa.json";
 import { formatMessage } from "@/i18n/format";
+import { refreshCycleNotifications } from "@/lib/cycle-notifications";
 import { jalaliDateLabel, toPersianDigits } from "@/lib/dates";
 import { Button, Card, ChoiceGroup, Field, Page, Text } from "@/ui";
 import DeleteAllRecords from "@/ui/delete-all-records";
@@ -111,6 +112,11 @@ export default function ProfileScreen() {
         queryClient.invalidateQueries({ queryKey: ["profile"] }),
         queryClient.invalidateQueries({ queryKey: ["weight-entries"] }),
       ]);
+      try {
+        await refreshCycleNotifications();
+      } catch (error) {
+        console.error("Could not refresh cycle notifications", error);
+      }
       setEditing(false);
     },
   });

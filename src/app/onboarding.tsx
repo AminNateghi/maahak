@@ -7,6 +7,7 @@ import { View } from "react-native";
 import { z } from "zod";
 import { saveProfile } from "@/db/repository";
 import fa from "@/i18n/fa.json";
+import { refreshCycleNotifications } from "@/lib/cycle-notifications";
 import { addDays, toIsoDate } from "@/lib/dates";
 import { healthConditions } from "@/lib/symptoms";
 import {
@@ -120,6 +121,11 @@ export default function OnboardingScreen() {
       await queryClient.invalidateQueries({ queryKey: ["profile"] });
       await queryClient.invalidateQueries({ queryKey: ["period-starts"] });
       await queryClient.invalidateQueries({ queryKey: ["weight-entries"] });
+      try {
+        await refreshCycleNotifications();
+      } catch (error) {
+        console.error("Could not refresh cycle notifications", error);
+      }
       router.replace("/(tabs)");
     } catch (error) {
       console.error("Could not save onboarding data", error);

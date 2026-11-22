@@ -14,6 +14,7 @@ import {
 import { db } from "@/db/client";
 import migrations from "@/db/migrations/migrations";
 import fa from "@/i18n/fa.json";
+import { refreshCycleNotifications } from "@/lib/cycle-notifications";
 import { refreshMedicationNotifications } from "@/lib/notifications";
 import { queryClient } from "@/lib/query";
 import { Text, Toast } from "@/ui";
@@ -41,6 +42,9 @@ export default function RootLayout() {
     refreshMedicationNotifications().catch((error: unknown) => {
       console.error("Could not refresh medication notifications", error);
       Toast({ text: fa.database.notificationRefreshMessage });
+    });
+    refreshCycleNotifications().catch((error: unknown) => {
+      console.error("Could not refresh cycle notifications", error);
     });
   }, [migration.success]);
 

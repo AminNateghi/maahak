@@ -14,6 +14,7 @@ import { db, sqlite } from "@/db/client";
 import migrations from "@/db/migrations/migrations";
 import { medicationReminders } from "@/db/schema";
 import fa from "@/i18n/fa.json";
+import { refreshCycleNotifications } from "@/lib/cycle-notifications";
 import {
   removeAllReminderNotifications,
   syncReminderNotifications,
@@ -202,6 +203,7 @@ export default function DatabaseScreen() {
         notificationSyncFailed = results.some(
           (result) => result.status === "rejected",
         );
+        await refreshCycleNotifications();
       } catch (error) {
         console.error("Reminder notification sync after restore failed", error);
         notificationSyncFailed = true;
