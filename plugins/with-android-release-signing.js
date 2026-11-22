@@ -17,6 +17,11 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            ndk {
+                abiFilters "arm64-v8a", "armeabi-v7a"
+            }
         }
     }
 }
