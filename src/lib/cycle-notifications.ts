@@ -39,9 +39,11 @@ export async function refreshCycleNotifications(): Promise<void> {
   const requested = permission.granted
     ? permission
     : await Notifications.requestPermissionsAsync();
-  if (!requested.granted) return;
-
+  if (!requested.granted) {
+    throw new Error(fa.notifications.permissionDenied);
+  }
   await configureAndroidChannel();
+
   const reminders = buildCycleReminders(
     estimate,
     user.averageCycleDays,
@@ -98,8 +100,9 @@ export async function cancelCycleNotifications(): Promise<void> {
 async function configureAndroidChannel() {
   await Notifications.setNotificationChannelAsync(channelId, {
     name: fa.notifications.cycleChannel,
-    importance: Notifications.AndroidImportance.DEFAULT,
-    vibrationPattern: [0, 200],
+    importance: Notifications.AndroidImportance.MAX,
+    vibrationPattern: [0, 250, 250, 250],
+    lightColor: "#FF231F7C",
     sound: null,
   });
 }

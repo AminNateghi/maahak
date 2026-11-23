@@ -20,6 +20,7 @@ export const Styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.blush,
     direction: "rtl",
+    paddingBottom: 100,
   },
   text: {
     fontFamily: "Vazirmatn",

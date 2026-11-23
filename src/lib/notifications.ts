@@ -6,6 +6,7 @@ import { listReminders, updateReminderNotifications } from "@/db/repository";
 import { type MedicationReminder, medicationReminders } from "@/db/schema";
 import fa from "@/i18n/fa.json";
 
+const channelId = "medications";
 type Dose = { id: string; at: string };
 const dosesToSchedule = 60;
 const refreshThreshold = 15;
@@ -144,7 +145,7 @@ async function scheduleDoses(
         trigger: {
           type: Notifications.SchedulableTriggerInputTypes.DATE,
           date: at,
-          channelId: "medications",
+          channelId: channelId,
         },
       });
       doses.push({ id, at: at.toISOString() });
@@ -168,7 +169,7 @@ async function scheduleDoses(
 }
 
 async function configureAndroidChannel() {
-  await Notifications.setNotificationChannelAsync("medications", {
+  await Notifications.setNotificationChannelAsync(channelId, {
     name: fa.notifications.channel,
     importance: Notifications.AndroidImportance.DEFAULT,
     vibrationPattern: [0, 200],
